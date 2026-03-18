@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>If You Were Rejected For a Car Loan, Read This Before You Try Again</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #fff;
+    font-family: 'Merriweather', Georgia, serif;
+    color: #1A1A1A;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: #1A2B4A;
+    padding: 9px 16px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.02em;
+  }
+  .topbar strong { color: #fff; }
+
+  /* ── ARTICLE ── */
+  .article {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 28px 20px 150px;
+  }
+
+  .category {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #C41230;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: clamp(22px, 5vw, 32px);
+    font-weight: 700;
+    line-height: 1.25;
+    color: #111;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .deck {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #555;
+    line-height: 1.65;
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 2px solid #eee;
+  }
+
+  .byline {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 24px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .byline strong { color: #555; font-weight: 600; }
+  .byline-dot { color: #ccc; }
+
+  p {
+    margin-bottom: 20px;
+    color: #2D2D2D;
+    font-size: 16px;
+    line-height: 1.9;
+  }
+  p strong { color: #111; font-weight: 700; }
+
+  h2 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: clamp(18px, 4vw, 22px);
+    font-weight: 700;
+    color: #111;
+    margin: 32px 0 14px;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  /* image placeholder */
+  .img-block {
+    margin: 24px 0 8px;
+  }
+  .img-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #F0EDE6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #bbb;
+    font-weight: 500;
+  }
+  .img-caption {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #999;
+    margin-top: 7px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* pull quote */
+  .pullquote {
+    border-left: 4px solid #C41230;
+    padding: 14px 20px;
+    margin: 26px 0;
+    background: #FFF8F8;
+  }
+  .pullquote p {
+    font-size: 17px;
+    font-style: italic;
+    color: #333;
+    margin: 0;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  /* section break */
+  .section-break {
+    text-align: center;
+    margin: 28px 0;
+    color: #ddd;
+    font-size: 18px;
+    letter-spacing: 8px;
+  }
+
+  /* highlight box */
+  .highlight {
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-left: 4px solid #F59E0B;
+    padding: 16px 18px;
+    margin: 24px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #1A1A1A;
+  }
+  .highlight strong { font-weight: 700; color: #111; }
+
+  /* qualification checklist */
+  .quallist {
+    background: #F8FFFE;
+    border: 1px solid #D1FAE5;
+    border-left: 4px solid #10B981;
+    padding: 18px 20px;
+    margin: 24px 0;
+    font-family: 'Inter', sans-serif;
+  }
+  .quallist-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #065F46;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 12px;
+  }
+  .quallist ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .quallist ul li {
+    font-size: 14px;
+    color: #1A1A1A;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .quallist ul li::before {
+    content: '✓';
+    color: #10B981;
+    font-weight: 800;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+
+  /* warning box */
+  .warning {
+    background: #FFFBEB;
+    border: 1px solid #FCD34D;
+    border-left: 4px solid #F59E0B;
+    padding: 14px 18px;
+    margin: 24px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #78350F;
+  }
+  .warning strong { color: #92400E; font-weight: 700; }
+
+  /* numbers callout */
+  .numbers-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border: 1px solid #eee;
+    margin: 26px 0;
+  }
+  .number-cell {
+    padding: 16px 12px;
+    text-align: center;
+    border-right: 1px solid #eee;
+  }
+  .number-cell:last-child { border-right: none; }
+  .number-big {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: #C41230;
+    display: block;
+    line-height: 1;
+    margin-bottom: 5px;
+    letter-spacing: -0.02em;
+  }
+  .number-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #888;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  /* inline CTA box */
+  .cta-box {
+    background: #1A2B4A;
+    padding: 24px 20px;
+    margin: 30px 0;
+    text-align: center;
+  }
+  .cta-box-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .cta-box-payment {
+    font-family: 'Inter', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    color: #FFD700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .cta-box-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 20px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .cta-box-btn {
+    display: block;
+    background: #C41230;
+    color: #fff;
+    text-decoration: none;
+    padding: 17px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.15s;
+    animation: shake 4s ease 6s infinite;
+    line-height: 1.2;
+  }
+  .cta-box-btn:hover { background: #A30F28; }
+  .cta-box-btn-sub {
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 0.7;
+    display: block;
+    margin-top: 5px;
+  }
+
+  @keyframes shake {
+    0%,88%,100% { transform: translateX(0); }
+    89% { transform: translateX(-4px); }
+    91% { transform: translateX(4px); }
+    93% { transform: translateX(-3px); }
+    95% { transform: translateX(3px); }
+    97% { transform: translateX(-1px); }
+  }
+
+  /* mini testimonial */
+  .mini-testi {
+    border-left: 3px solid #eee;
+    padding: 2px 0 2px 18px;
+    margin: 24px 0;
+  }
+  .mini-testi-quote {
+    font-size: 15px;
+    font-style: italic;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+  .mini-testi-attr {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #999;
+    font-weight: 500;
+  }
+  .mini-testi-attr strong { color: #555; font-weight: 600; }
+
+  /* ── STICKY CTA ── */
+  .sticky-cta {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #fff;
+    border-top: 2px solid #1A2B4A;
+    padding: 12px 20px 18px;
+    z-index: 30;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  }
+  .sticky-inner { max-width: 640px; margin: 0 auto; }
+  .sticky-btn {
+    display: block;
+    width: 100%;
+    background: #1A2B4A;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    padding: 17px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    transition: background 0.15s;
+    animation: shake 4s ease 9s infinite;
+  }
+  .sticky-btn:hover { background: #243357; }
+  .sticky-btn-sub {
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 0.65;
+    display: block;
+    margin-top: 5px;
+  }
+  .sticky-disclaimer {
+    text-align: center;
+    font-size: 10px;
+    color: #aaa;
+    margin-top: 8px;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <strong>Free to check.</strong> No credit impact. Takes 90 seconds. Available across Canada.
+</div>
+
+<div class="article">
+
+  <div class="category">Auto Finance · Canada · 2025</div>
+
+  <h1>If You Were Rejected For a Car Loan, Read This Before You Try Again</h1>
+
+  <div class="deck">Something shifted in the Canadian auto market in the last few months. Banks are approving people they wouldn't touch before — and the reason has nothing to do with your credit getting better.</div>
+
+  <div class="byline">
+    <strong>Staff Report</strong>
+    <span class="byline-dot">·</span>
+    Updated March 2025
+    <span class="byline-dot">·</span>
+    4 min read
+  </div>
+
+  <!-- IMAGE 1 -->
+  <div class="img-block">
+    <div class="img-placeholder">[ IMAGE 1 ]</div>
+    <div class="img-caption">Repo and fleet vehicles sitting at a clearing facility across Canada — banks are under pressure to move thousands of units fast.</div>
+  </div>
+
+  <p>Here's something most Canadians don't know: right now, banks and fleet operators across the country are sitting on more vehicle inventory than they can move. Repos, off-lease returns, and rental fleet offloads are all hitting the market at the same time.</p>
+
+  <p>When that happens — and it doesn't happen often — the entire dynamic of getting approved for a vehicle loan changes. Lenders who would normally turn you away start saying yes. Monthly payments that should be $700, $800, even $900 start coming in at $263, $271, $287.</p>
+
+  <p>This isn't a permanent situation. It's a window. And if you've been rejected before, or if you've just assumed you couldn't afford a decent vehicle, this window is worth understanding.</p>
+
+  <div class="pullquote">
+    <p>"I got turned down twice in the same month. Then a friend told me about the clearance program. Same week, different answer — $271 a month for a 2021 truck. I thought he was messing with me."</p>
+  </div>
+
+  <h2>Why Are Banks Suddenly Approving People With Bad Credit?</h2>
+
+  <p>It comes down to simple economics. A vehicle sitting on a lot depreciates every single day. Banks and fleet operators would rather move it at a lower monthly payment — even to someone with a 490 credit score — than have it sit there losing value.</p>
+
+  <p><strong>They need you more than you need them right now.</strong> That's a reversal from how it normally works, and it's why people who've been rejected before are now getting approved.</p>
+
+  <p>The specific trigger is a combination of factors hitting at once: an unusually high number of repossessions, major rental companies offloading their fleets after over-expanding, and a wave of off-lease vehicles returning to lenders simultaneously. The result is an inventory backlog that lenders are under real pressure to clear.</p>
+
+  <!-- IMAGE 2 -->
+  <div class="img-block">
+    <div class="img-placeholder">[ IMAGE 2 ]</div>
+    <div class="img-caption">A repo clearance sticker on a truck windshield — the same vehicle a dealership was listing for $847/month three months ago.</div>
+  </div>
+
+  <div class="section-break">· · ·</div>
+
+  <h2>What Kind of Vehicles Are We Talking About?</h2>
+
+  <p>Not beaters. The clearance inventory includes trucks, SUVs, and sedans from recent model years — vehicles that would normally sit behind a rope at a dealership and require a pristine credit file and a large down payment to access.</p>
+
+  <p>The difference is that these vehicles have come back through the repo or fleet system, which means lenders are motivated to move them rather than letting them depreciate further. That motivation is what creates the pricing you wouldn't normally see.</p>
+
+  <div class="numbers-row">
+    <div class="number-cell">
+      <span class="number-big">$263</span>
+      <span class="number-label">Lowest monthly payment reported — pickup truck</span>
+    </div>
+    <div class="number-cell">
+      <span class="number-big">400+</span>
+      <span class="number-label">Minimum credit score to qualify</span>
+    </div>
+    <div class="number-cell">
+      <span class="number-big">90s</span>
+      <span class="number-label">Time to check what's available near you</span>
+    </div>
+  </div>
+
+  <div class="mini-testi">
+    <div class="mini-testi-quote">"I'm self-employed, credit around 505. Every dealership I walked into treated me like I was wasting their time. This was completely different — took the quiz on my phone, showed me 6 vehicles near me, picked a truck for $271 a month."</div>
+    <div class="mini-testi-attr"><strong>Mike R.</strong> · Hamilton, Ontario</div>
+  </div>
+
+  <h2>Do You Actually Qualify?</h2>
+
+  <p>The requirements for this clearance program are deliberately low — because the whole point is to move vehicles to buyers who wouldn't normally get access through a traditional dealership.</p>
+
+  <div class="quallist">
+    <div class="quallist-title">You likely qualify if:</div>
+    <ul>
+      <li>Your credit score is 400 or above — even if you've been rejected elsewhere</li>
+      <li>You bring in at least $2,200/month — employed, self-employed, or any other income source</li>
+      <li>You're located anywhere in Canada — program is available in all provinces</li>
+      <li>You need a truck, SUV, or sedan — all vehicle types are included</li>
+    </ul>
+  </div>
+
+  <p>That's genuinely it. There's no minimum down payment requirement to check. No penalty for checking. No credit pull just to see what's available in your area.</p>
+
+  <div class="highlight">
+    <strong>Important:</strong> This program exists because lenders have too much inventory right now. That situation will not last. When the inventory clears — and it will — approvals tighten back up and prices go back to normal. The window to take advantage of this is open right now, but it won't stay open.
+  </div>
+
+  <!-- IMAGE 3 -->
+  <div class="img-block">
+    <div class="img-placeholder">[ IMAGE 3 ]</div>
+    <div class="img-caption">A Canadian buyer seeing their approval result — credit score 490, monthly payment $271, 2021 pickup truck available near them.</div>
+  </div>
+
+  <h2>How To Find Out What's Available Near You</h2>
+
+  <p>There's a free 90-second quiz that pulls real vehicle inventory in your specific area and shows you what you'd actually pay monthly based on your income and credit profile. No dealership visit, no salesperson, no pressure.</p>
+
+  <p>You answer four questions — your location, income range, credit range, and what type of vehicle you need. The quiz shows you what's available and what your estimated monthly payment would be. You don't commit to anything by checking.</p>
+
+  <div class="warning">
+    <strong>One thing to know:</strong> Availability is regional and changes daily as inventory is claimed. Some areas in Canada have significantly more options right now than others. If you're in Ontario, Alberta, or BC, availability is currently high — but that changes as buyers come through.
+  </div>
+
+  <p>The quiz is free, takes 90 seconds, and has no impact on your credit score. You're just seeing what exists before deciding anything.</p>
+
+  <!-- INLINE CTA -->
+  <div class="cta-box">
+    <div class="cta-box-eyebrow">Payments starting as low as</div>
+    <div class="cta-box-payment">$263/mo</div>
+    <div class="cta-box-sub">Trucks · SUVs · Sedans · Credit 400+ · All provinces<br>Free to check · No credit impact</div>
+    <a href="https://app.myautoapproval.ca/car?" class="cta-box-btn">
+      Find Out What I Qualify For →
+      <span class="cta-box-btn-sub">Free · No credit impact · Takes 90 seconds</span>
+    </a>
+  </div>
+
+  <div class="mini-testi">
+    <div class="mini-testi-quote">"I've been driving a 2009 Civic with 290,000km on it for two years because I assumed I couldn't qualify for anything. Took the quiz. Got approved for $263 a month. I wish I'd done this sooner."</div>
+    <div class="mini-testi-attr"><strong>Dave T.</strong> · Mississauga, Ontario</div>
+  </div>
+
+  <p>Inventory levels vary by region — some areas in Canada have significantly more availability right now than others, which is why it's worth checking sooner rather than later. Once the clearance inventory is gone, the approvals and pricing return to normal.</p>
+
+  <p style="font-size:13px;color:#aaa;font-family:'Inter',sans-serif;line-height:1.6;margin-top:32px;padding-top:20px;border-top:1px solid #eee;">
+    <em>Results vary by region, credit profile, and available inventory. This is not a guaranteed offer. All applications subject to lender approval. MyAutoApproval and its partners will never ask you for an upfront fee or deposit. Program availability subject to change without notice.</em>
+  </p>
+
+</div>
+
+<!-- STICKY CTA -->
+<div class="sticky-cta">
+  <div class="sticky-inner">
+    <a href="https://app.myautoapproval.ca/car?" class="sticky-btn">
+      Find Out What I Qualify For →
+      <span class="sticky-btn-sub">Free · No credit impact · Takes 90 seconds</span>
+    </a>
+    <div class="sticky-disclaimer">
+      Results vary by region and credit profile. Not a guaranteed offer. Subject to lender approval.
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
