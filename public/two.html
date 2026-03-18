@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canadian Banks Are Quietly Clearing Thousands of Vehicles — Here's How To Get One</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #fff;
+    font-family: 'Merriweather', Georgia, serif;
+    color: #1A1A1A;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: #1A2B4A;
+    padding: 9px 16px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.02em;
+  }
+
+  .topbar strong { color: #fff; }
+
+  /* ── ARTICLE ── */
+  .article {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 28px 20px 140px;
+  }
+
+  /* category */
+  .category {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #C41230;
+    margin-bottom: 14px;
+  }
+
+  /* headline */
+  h1 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: clamp(22px, 5vw, 30px);
+    font-weight: 700;
+    line-height: 1.3;
+    color: #111;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+
+  /* byline */
+  .byline {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    font-weight: 400;
+  }
+
+  .byline strong { color: #555; font-weight: 600; }
+
+  /* body text */
+  p {
+    margin-bottom: 18px;
+    color: #2D2D2D;
+    font-size: 16px;
+    line-height: 1.85;
+  }
+
+  p strong {
+    color: #111;
+    font-weight: 700;
+  }
+
+  /* pull quote */
+  .pullquote {
+    border-left: 4px solid #C41230;
+    padding: 14px 20px;
+    margin: 24px 0;
+    background: #FFF8F8;
+  }
+
+  .pullquote p {
+    font-size: 17px;
+    font-style: italic;
+    color: #333;
+    margin: 0;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  /* section break */
+  .section-break {
+    text-align: center;
+    margin: 26px 0;
+    color: #ccc;
+    font-size: 18px;
+    letter-spacing: 8px;
+  }
+
+  /* inline highlight */
+  .highlight {
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    padding: 14px 18px;
+    margin: 22px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    color: #1A1A1A;
+  }
+
+  .highlight strong {
+    font-weight: 700;
+    color: #111;
+  }
+
+  /* ── CTA BOX — inline ── */
+  .cta-box {
+    background: #1A2B4A;
+    padding: 22px 20px;
+    margin: 28px 0;
+    text-align: center;
+  }
+
+  .cta-box-top {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .cta-box-payment {
+    font-family: 'Inter', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #FFD700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .cta-box-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 18px;
+    font-weight: 400;
+  }
+
+  .cta-box-btn {
+    display: block;
+    background: #C41230;
+    color: #fff;
+    text-decoration: none;
+    padding: 16px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    animation: shake 4s ease 6s infinite;
+    transition: background 0.15s;
+  }
+
+  .cta-box-btn:hover { background: #A30F28; }
+
+  @keyframes shake {
+    0%,88%,100% { transform: translateX(0); }
+    89%   { transform: translateX(-4px); }
+    91%   { transform: translateX(4px); }
+    93%   { transform: translateX(-3px); }
+    95%   { transform: translateX(3px); }
+    97%   { transform: translateX(-1px); }
+  }
+
+  .cta-box-btn-sub {
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 0.7;
+    display: block;
+    margin-top: 4px;
+  }
+
+  /* ── STICKY CTA ── */
+  .sticky-cta {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #fff;
+    border-top: 2px solid #1A2B4A;
+    padding: 12px 20px 18px;
+    z-index: 30;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  }
+
+  .sticky-inner {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .sticky-btn {
+    display: block;
+    width: 100%;
+    background: #1A2B4A;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    padding: 16px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    transition: background 0.15s;
+    animation: shake 4s ease 8s infinite;
+  }
+
+  .sticky-btn:hover { background: #243357; }
+
+  .sticky-btn-sub {
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 0.65;
+    display: block;
+    margin-top: 4px;
+  }
+
+  .sticky-disclaimer {
+    text-align: center;
+    font-size: 10px;
+    color: #aaa;
+    margin-top: 8px;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <strong>Free to check.</strong> No credit impact. Takes 90 seconds. Available across Canada.
+</div>
+
+<div class="article">
+
+  <div class="category">Auto Finance · Canada · 2025</div>
+
+  <h1>Canadian Banks Are Quietly Clearing Thousands of Vehicles Right Now — And Buyers With Bad Credit Are Taking Advantage</h1>
+
+  <div class="byline">
+    <strong>Staff Report</strong> &nbsp;·&nbsp; Updated March 2025 &nbsp;·&nbsp; 2 min read
+  </div>
+
+  <!-- IMAGE 1 -->
+  <div style="margin-bottom:22px;">
+    <div style="width:100%;aspect-ratio:16/9;background:#e8e4dc;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:13px;color:#aaa;font-weight:500;">[ IMAGE 1 ]</div>
+    <div style="font-family:'Inter',sans-serif;font-size:11px;color:#999;margin-top:6px;font-style:italic;">Repo and fleet vehicles sitting at a clearing facility — banks are under pressure to move them fast.</div>
+  </div>
+
+  <p>If you've been turned down for a car loan in the past year, or if dealership prices have felt completely out of reach, there's something happening right now in Canada that most people haven't heard about yet.</p>
+
+  <p>Banks and fleet operators across the country are sitting on an unusual amount of vehicle inventory. Repos, off-lease returns, and rental fleet offloads are all clearing at the same time — and lenders are under pressure to move them fast.</p>
+
+  <div class="pullquote">
+    <p>"When lenders have too much inventory, the rules change. Approvals that normally wouldn't happen start happening. Monthly payments that should be $800 drop to $263."</p>
+  </div>
+
+  <p>This isn't a permanent situation. It's a window. And right now, that window is open.</p>
+
+  <p><strong>What does this mean for someone with bad credit?</strong> It means that the same lenders who might have rejected you six months ago are now approving people with credit scores as low as 400. The math is simple — they'd rather get the vehicle off their lot at a lower monthly payment than have it sit there depreciating.</p>
+
+  <div class="section-break">· · ·</div>
+
+  <!-- IMAGE 2 -->
+  <div style="margin-bottom:22px;">
+    <div style="width:100%;aspect-ratio:16/9;background:#e8e4dc;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:13px;color:#aaa;font-weight:500;">[ IMAGE 2 ]</div>
+    <div style="font-family:'Inter',sans-serif;font-size:11px;color:#999;margin-top:6px;font-style:italic;">A repo clearance sticker on a truck windshield — the same vehicle a dealership was selling for $847/month.</div>
+  </div>
+
+  <p>The vehicles available through this clearance program aren't just beaters. We're talking about trucks, SUVs, and sedans from recent model years — the kinds of vehicles that would normally require perfect credit and a large down payment at a traditional dealership.</p>
+
+  <p>The only real requirements to qualify are straightforward: <strong>a credit score of 400 or above</strong>, and <strong>income of at least $2,200 per month</strong> — whether you're employed full-time, self-employed, or earning from any other source.</p>
+
+  <div class="highlight">
+    <strong>Bottom line:</strong> Monthly payments are being reported as low as <strong>$263/month</strong> for pickup trucks through this program. That's not a teaser rate. That's what buyers are actually paying right now because banks need to move inventory fast.
+  </div>
+
+  <p>The easiest way to find out what's available in your specific area is to take a free 90-second quiz. It asks about your location, income, and vehicle preference — and shows you real vehicles available near you along with your actual estimated monthly payment.</p>
+
+  <p>There's no credit pull, no obligation, and no cost. You're just seeing what exists in your area before deciding anything.</p>
+
+  <!-- INLINE CTA -->
+  <div class="cta-box">
+    <div class="cta-box-top">Payments starting as low as</div>
+    <div class="cta-box-payment">$263 / month</div>
+    <div class="cta-box-desc">Trucks · SUVs · Sedans · Credit 400+ · All provinces</div>
+    <a href="https://app.myautoapproval.ca/car?" class="cta-box-btn">
+      Find Out What I Qualify For →
+      <span class="cta-box-btn-sub">Free · No credit impact · 90 seconds</span>
+    </a>
+  </div>
+
+  <!-- IMAGE 3 -->
+  <div style="margin:22px 0;">
+    <div style="width:100%;aspect-ratio:16/9;background:#e8e4dc;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:13px;color:#aaa;font-weight:500;">[ IMAGE 3 ]</div>
+    <div style="font-family:'Inter',sans-serif;font-size:11px;color:#999;margin-top:6px;font-style:italic;">Availability varies by region — some areas in Canada have significantly more inventory clearing right now than others.</div>
+  </div>
+
+  <p>The program is available across all provinces. Inventory levels vary by region — some areas have more availability than others right now, which is why it's worth checking sooner rather than later. Once the clearance inventory is gone, the approvals and pricing go back to normal.</p>
+
+  <p style="font-size:13px; color:#aaa; font-family:'Inter',sans-serif; line-height:1.6; margin-top:30px; padding-top:20px; border-top:1px solid #eee;">
+    <em>Results vary by region, credit profile, and available inventory. This is not a guaranteed offer. All applications subject to lender approval. Program availability subject to change without notice.</em>
+  </p>
+
+</div>
+
+<!-- STICKY CTA -->
+<div class="sticky-cta">
+  <div class="sticky-inner">
+    <a href="https://app.myautoapproval.ca/car?" class="sticky-btn">
+      Find Out What I Qualify For →
+      <span class="sticky-btn-sub">Free · No credit impact · Takes 90 seconds</span>
+    </a>
+    <div class="sticky-disclaimer">
+      Results vary by region and credit profile. Not a guaranteed offer. Subject to lender approval.
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

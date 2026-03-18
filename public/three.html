@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto Clearance Canada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #F0F2F5;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ── FAKE CHAT HEADER ── */
+  .chat-header {
+    background: #1A2B4A;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .chat-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2563EB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .chat-avatar-online {
+    width: 10px;
+    height: 10px;
+    background: #4ADE80;
+    border-radius: 50%;
+    border: 2px solid #1A2B4A;
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+  }
+
+  .chat-info {}
+
+  .chat-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .chat-status {
+    font-size: 11px;
+    color: #4ADE80;
+    font-weight: 500;
+  }
+
+  /* ── CHAT BODY ── */
+  .chat-body {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px 16px 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* timestamp */
+  .chat-time {
+    text-align: center;
+    font-size: 11px;
+    color: #9CA3AF;
+    font-weight: 500;
+    margin: 12px 0 8px;
+  }
+
+  /* bubble wrapper */
+  .bubble-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+
+  .bubble-row.right {
+    flex-direction: row-reverse;
+  }
+
+  /* small avatar for left side */
+  .bubble-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #2563EB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #fff;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-bottom: 2px;
+  }
+
+  .bubble-avatar.hidden {
+    visibility: hidden;
+  }
+
+  /* bubbles */
+  .bubble {
+    max-width: 78%;
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 400;
+    position: relative;
+    opacity: 0;
+    transform: translateY(6px);
+    animation: bubbleIn 0.3s ease forwards;
+  }
+
+  /* left = advisor */
+  .bubble.left {
+    background: #fff;
+    color: #1A2B4A;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+
+  /* right = user (grey, read-only) */
+  .bubble.right {
+    background: #1A2B4A;
+    color: #fff;
+    border-bottom-right-radius: 4px;
+  }
+
+  .bubble strong {
+    font-weight: 700;
+  }
+
+  .bubble .amount {
+    font-size: 22px;
+    font-weight: 800;
+    color: #2563EB;
+    display: block;
+    margin: 4px 0 2px;
+    line-height: 1.1;
+  }
+
+  .bubble.left .amount {
+    color: #2563EB;
+  }
+
+  /* typing indicator */
+  .typing {
+    background: #fff;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    width: 52px;
+    height: 36px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    opacity: 0;
+    animation: bubbleIn 0.3s ease forwards;
+  }
+
+  .typing span {
+    width: 6px;
+    height: 6px;
+    background: #9CA3AF;
+    border-radius: 50%;
+    animation: typingDot 1.2s ease-in-out infinite;
+  }
+
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes typingDot {
+    0%, 100% { transform: translateY(0); opacity: 0.4; }
+    50%       { transform: translateY(-4px); opacity: 1; }
+  }
+
+  @keyframes bubbleIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* staggered delays for each bubble */
+  .d1  { animation-delay: 0.2s; }
+  .d2  { animation-delay: 0.7s; }
+  .d3  { animation-delay: 1.1s; }
+  .d4  { animation-delay: 1.6s; }
+  .d5  { animation-delay: 2.1s; }
+  .d6  { animation-delay: 2.6s; }
+  .d7  { animation-delay: 3.1s; }
+  .d8  { animation-delay: 3.6s; }
+  .d9  { animation-delay: 4.1s; }
+  .d10 { animation-delay: 4.6s; }
+  .d11 { animation-delay: 5.1s; }
+
+  /* vehicle card bubble */
+  .vehicle-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    max-width: 78%;
+    opacity: 0;
+    transform: translateY(6px);
+    animation: bubbleIn 0.3s ease forwards;
+  }
+
+  .vehicle-card-header {
+    background: #1A2B4A;
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .vehicle-card-body {
+    padding: 12px 14px;
+  }
+
+  .vehicle-card-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1A2B4A;
+    margin-bottom: 8px;
+  }
+
+  .vehicle-card-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+
+  .vehicle-card-key { color: #6B7A8D; font-weight: 500; }
+  .vehicle-card-val { font-weight: 700; color: #1A2B4A; }
+  .vehicle-card-val.green { color: #16A34A; }
+  .vehicle-card-val.blue  { color: #2563EB; font-size: 15px; }
+
+  /* ── STICKY CTA BAR ── */
+  .sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid #E2E6EC;
+    padding: 14px 18px 20px;
+    z-index: 20;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  }
+
+  .sticky-cta-inner {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .sticky-cta-text {
+    font-size: 12px;
+    color: #6B7A8D;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .sticky-cta-text strong {
+    color: #1A2B4A;
+    font-weight: 700;
+  }
+
+  .cta-btn-wrap {
+    position: relative;
+  }
+
+  .cta-btn-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 13px;
+    background: #2563EB;
+    opacity: 0;
+    z-index: 0;
+    animation: glowPulse 2.2s ease-in-out 5.5s infinite;
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0;    transform: scale(1);    }
+    50%       { opacity: 0.15; transform: scale(1.01); }
+  }
+
+  @keyframes shake {
+    0%, 88%, 100% { transform: translateX(0); }
+    89%           { transform: translateX(-4px) rotate(-1deg); }
+    91%           { transform: translateX(4px) rotate(1deg); }
+    93%           { transform: translateX(-3px); }
+    95%           { transform: translateX(3px); }
+    97%           { transform: translateX(-2px); }
+    99%           { transform: translateX(2px); }
+  }
+
+  .cta-btn {
+    display: block;
+    width: 100%;
+    background: #2563EB;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    padding: 18px 22px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 16px rgba(37,99,235,0.38);
+    transition: background 0.15s, box-shadow 0.15s;
+    animation: shake 4s ease 6s infinite;
+  }
+
+  .cta-btn:hover  { background: #1D4ED8; transform: translateY(-1px); }
+  .cta-btn:active { transform: translateY(0); }
+
+  .cta-btn-sub {
+    font-size: 11px;
+    font-weight: 500;
+    opacity: 0.75;
+    display: block;
+    margin-top: 4px;
+  }
+
+  /* disclaimer */
+  .disclaimer {
+    text-align: center;
+    font-size: 10px;
+    color: #B0B8C4;
+    line-height: 1.6;
+    padding: 10px 16px 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- CHAT HEADER -->
+<div class="chat-header">
+  <div class="chat-avatar">
+    🍁
+    <div class="chat-avatar-online"></div>
+  </div>
+  <div class="chat-info">
+    <div class="chat-name">AutoClearance Canada</div>
+    <div class="chat-status">● Online now</div>
+  </div>
+</div>
+
+<!-- CHAT CONVERSATION -->
+<div class="chat-body">
+
+  <div class="chat-time">Today</div>
+
+  <!-- User opens conversation -->
+  <div class="bubble-row right">
+    <div class="bubble right d1">Hey, I saw an ad about repo trucks under $300/month. Is that actually real?</div>
+  </div>
+
+  <!-- Advisor responds -->
+  <div class="bubble-row">
+    <div class="bubble-avatar">AC</div>
+    <div class="bubble left d2">Hey! Yes it's real — let me explain what's happening right now 👇</div>
+  </div>
+
+  <div class="bubble-row">
+    <div class="bubble-avatar hidden">AC</div>
+    <div class="bubble left d3">Banks and rental companies across Canada are sitting on way more inventory than they can move. Repos, off-lease returns, fleet vehicles — all at the same time.</div>
+  </div>
+
+  <div class="bubble-row">
+    <div class="bubble-avatar hidden">AC</div>
+    <div class="bubble left d4">When that happens, lenders get flexible. They <strong>need</strong> to move the vehicles. So approval requirements loosen and monthly payments drop hard.</div>
+  </div>
+
+  <!-- User question -->
+  <div class="bubble-row right">
+    <div class="bubble right d5">How low are payments actually going?</div>
+  </div>
+
+  <!-- Advisor with number -->
+  <div class="bubble-row">
+    <div class="bubble-avatar">AC</div>
+    <div class="bubble left d6">
+      Right now we're seeing deals like this:
+      <span class="amount">$263 / month</span>
+      That's for a truck. With a 490 credit score. Stuff that would've been $800+ at a dealership 6 months ago.
+    </div>
+  </div>
+
+  <!-- Sample vehicle card -->
+  <div class="bubble-row d7">
+    <div class="bubble-avatar hidden">AC</div>
+    <div class="vehicle-card d7">
+      <div class="vehicle-card-header">📍 Example — Near You</div>
+      <div class="vehicle-card-body">
+        <div class="vehicle-card-title">2021 Pickup Truck — Clearance</div>
+        <div class="vehicle-card-row">
+          <span class="vehicle-card-key">Program</span>
+          <span class="vehicle-card-val">Repo Clearance</span>
+        </div>
+        <div class="vehicle-card-row">
+          <span class="vehicle-card-key">Monthly payment</span>
+          <span class="vehicle-card-val blue">$263/mo</span>
+        </div>
+        <div class="vehicle-card-row">
+          <span class="vehicle-card-key">Min. credit score</span>
+          <span class="vehicle-card-val green">400+</span>
+        </div>
+        <div class="vehicle-card-row">
+          <span class="vehicle-card-key">Income required</span>
+          <span class="vehicle-card-val">$2,200/mo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User -->
+  <div class="bubble-row right">
+    <div class="bubble right d8">My credit isn't great though. Like maybe 490. Would I even qualify?</div>
+  </div>
+
+  <!-- Advisor -->
+  <div class="bubble-row">
+    <div class="bubble-avatar">AC</div>
+    <div class="bubble left d9">490 is totally fine for this program. Minimum is 400+. As long as you have income — employed, self-employed, doesn't matter — and you're bringing in $2,200+ a month, you're in the window.</div>
+  </div>
+
+  <div class="bubble-row">
+    <div class="bubble-avatar hidden">AC</div>
+    <div class="bubble left d10">It's not just trucks either — SUVs and sedans are clearing too. The quiz below takes 90 seconds and shows you exactly what's available near you and your actual monthly payment. <strong>No credit impact.</strong></div>
+  </div>
+
+  <!-- User -->
+  <div class="bubble-row right">
+    <div class="bubble right d11">Ok I'll check it out</div>
+  </div>
+
+</div>
+
+<!-- STICKY CTA -->
+<div class="sticky-cta">
+  <div class="sticky-cta-inner">
+    <div class="sticky-cta-text">
+      <strong>6 vehicles available near you</strong> — payments from $263/mo
+    </div>
+    <div class="cta-btn-wrap">
+      <a href="https://app.myautoapproval.ca/car?" class="cta-btn">
+        See What I Qualify For →
+        <span class="cta-btn-sub">Free · 90 seconds · No credit impact</span>
+      </a>
+    </div>
+    <div class="disclaimer">
+      Results vary by region and credit profile. Not a guaranteed offer. Subject to lender approval.
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
