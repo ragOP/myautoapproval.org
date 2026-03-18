@@ -219,7 +219,8 @@
     background: #EFF6FF;
     border: 1px solid #BFDBFE;
     border-radius: 8px;
-    width: 50%;
+    width: fit-content;
+    max-width: 100%;
     padding: 6px 8px;
     font-size: 14px;
     color: #1E3A5F;
@@ -228,11 +229,17 @@
     line-height: 1.5;
   }
 
+  .payment-callout .payment-text {
+    display: block;
+    white-space: nowrap;
+  }
+
   .payment-callout strong {
     color: var(--blue-accent);
     font-size: 20px;
     font-weight: 800;
     display: block;
+    white-space: nowrap;
     margin-top: 2px;
   }
 
@@ -455,7 +462,7 @@
     <div class="cta-label">Check your area — free &amp; instant</div>
 
     <div class="payment-callout">
-      Payments starting as low as
+      <span class="payment-text">Payments starting as low as</span>
       <strong>$263 / month</strong>
     </div>
 
