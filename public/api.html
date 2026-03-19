@@ -411,7 +411,6 @@
 
   <script>
     const API_URL = "/api/leadscout/submit";
-    const API_KEY = "170ab112-3304-4535-adb9-36aaf3c67759";
     const form = document.getElementById("loanForm");
     const statusEl = document.getElementById("status");
     const submitBtn = document.getElementById("submitBtn");
@@ -487,12 +486,11 @@
       };
     }
 
-    async function submitLeadInBackground(payload, apiKey) {
+    async function submitLeadInBackground(payload) {
       const response = await fetch(API_URL, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "x-api-key": apiKey
+          "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
       });
@@ -532,7 +530,7 @@
 
       try {
         const payload = buildPayload();
-        const result = await submitLeadInBackground(payload, API_KEY);
+        const result = await submitLeadInBackground(payload);
 
         if (canRedirect(result)) {
           setStatus("Redirecting to your best offer...");
