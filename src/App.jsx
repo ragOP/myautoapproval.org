@@ -17,7 +17,7 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Motion.div key={location.pathname} variants={pageTransition} initial="initial" animate="animate" exit="exit">
         <Routes location={location}>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<Chatbotdq />} />
           <Route path="/engsf2200" element={<LandingPage />} />
           <Route path="/quiz" element={<QuizPage />} />
           <Route path="/wed" element={<Chatbotdq />} />
