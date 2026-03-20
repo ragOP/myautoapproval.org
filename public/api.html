@@ -146,14 +146,57 @@
       font-size: 0.94rem;
     }
 
-    .form-grid {
+    .wizard {
+      display: grid;
+      gap: 12px;
+    }
+
+    .wizard-progress {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .wizard-question {
+      font-size: 1.06rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .wizard-choice {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .wizard-choice button {
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--line);
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .wizard-choice button:hover {
+      background: #f4f7ff;
+      border-color: #bcc9ef;
+      transform: none;
+    }
+
+    .wizard-actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
 
-    .full {
-      grid-column: 1 / -1;
+    .btn-secondary {
+      background: #eef2ff;
+      color: #173085;
+      border: 1px solid #d2dcff;
+    }
+
+    .btn-secondary:hover {
+      background: #e3eaff;
     }
 
     input,
@@ -211,6 +254,58 @@
 
     .sections {
       padding: 16px 0 54px;
+    }
+
+    .section-head {
+      margin: 0 0 14px;
+      font-size: clamp(1.3rem, 2.3vw, 1.8rem);
+      letter-spacing: -0.2px;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .story-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .story-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+    }
+
+    .story-card p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .story-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .quick-tips {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 9px;
+    }
+
+    .quick-tips li {
+      border: 1px solid #dce3f8;
+      border-radius: 10px;
+      padding: 10px 11px;
+      background: #f9fbff;
+      font-size: 0.92rem;
+      color: #2f426f;
     }
 
     .section-grid {
@@ -288,6 +383,7 @@
 
     @media (max-width: 980px) {
       .hero-grid,
+      .story-grid,
       .section-grid,
       .footer-grid {
         grid-template-columns: 1fr;
@@ -305,7 +401,7 @@
     }
 
     @media (max-width: 640px) {
-      .form-grid {
+      .wizard-actions {
         grid-template-columns: 1fr;
       }
     }
@@ -340,24 +436,15 @@
           <h2>Get Matched Now</h2>
           <p>Complete this quick form to see available offers.</p>
 
-          <form id="loanForm" class="form-grid">
-            <input id="firstName" type="text" placeholder="First name" required />
-            <input id="lastName" type="text" placeholder="Last name" required />
-            <input class="full" id="email" type="email" placeholder="Email address" required />
-            <input class="full" id="phone" type="tel" placeholder="Phone (555) 555-5555" required />
-            <input id="requestedAmount" type="number" min="100" max="35000" value="2500" required />
-            <select id="province" required>
-              <option value="" disabled>Province</option>
-              <option value="ON">ON</option><option value="QC" selected>QC</option><option value="BC">BC</option>
-              <option value="AB">AB</option><option value="MB">MB</option><option value="NB">NB</option>
-              <option value="NL">NL</option><option value="NS">NS</option><option value="PE">PE</option>
-              <option value="SK">SK</option><option value="NT">NT</option><option value="NU">NU</option><option value="YT">YT</option>
-            </select>
-            <select class="full" id="language">
-              <option value="en" selected>Language: English</option>
-              <option value="fr">Language: French</option>
-            </select>
-            <button class="full" id="submitBtn" type="submit">See My Loan Offers</button>
+          <form id="loanForm" class="wizard">
+            <div id="stepProgress" class="wizard-progress"></div>
+            <p id="stepQuestion" class="wizard-question"></p>
+            <div id="stepInput"></div>
+            <div class="wizard-actions">
+              <button id="backBtn" class="btn-secondary" type="button">Back</button>
+              <button id="nextBtn" type="button">Next</button>
+            </div>
+            <button id="submitBtn" type="submit" hidden>See My Loan Offers</button>
           </form>
 
           <div class="fine">
@@ -370,26 +457,51 @@
 
     <section class="sections">
       <div class="container">
+        <h2 class="section-head">Loan Matching Guide: What to expect in under 2 minutes</h2>
+        <div class="story-grid">
+          <article class="story-card">
+            <h3>Why people use this flow</h3>
+            <p>
+              When an urgent bill, repair, or debt payment pops up, comparing lenders one by one is slow.
+              This form helps you check potential matches quickly in one place.
+            </p>
+            <p>
+              You answer a short set of questions, then we pass your request to partner systems that can
+              show available paths based on your profile.
+            </p>
+          </article>
+          <aside class="story-card">
+            <h3>Quick tips before you start</h3>
+            <ul class="quick-tips">
+              <li>Use an active phone number to avoid missed calls.</li>
+              <li>Enter realistic monthly income for better matching.</li>
+              <li>Choose your loan purpose honestly to improve routing.</li>
+              <li>Complete all steps once to reduce retries.</li>
+            </ul>
+          </aside>
+        </div>
+
         <div class="section-grid">
           <article class="item">
-            <h3>1) Complete the form</h3>
-            <p>Provide a few details to start your request quickly.</p>
+            <h3>1) Answer one question at a time</h3>
+            <p>Mobile-first steps keep the form simple, fast, and easy to finish.</p>
           </article>
           <article class="item">
-            <h3>2) We match offers</h3>
-            <p>Your profile is matched to available partner lenders.</p>
+            <h3>2) We submit your request securely</h3>
+            <p>Your information is transmitted over HTTPS to our matching endpoint.</p>
           </article>
           <article class="item">
-            <h3>3) Review your option</h3>
-            <p>You are redirected to the best available offer flow.</p>
+            <h3>3) You review the next available path</h3>
+            <p>If a match is available, you are redirected to continue your offer flow.</p>
           </article>
         </div>
 
         <div class="faq">
-          <h3>Frequently Asked Questions</h3>
-          <p><strong>Will checking offers affect my credit score?</strong><br />Initial matching generally uses basic information to find available options.</p>
-          <p><strong>How long does it take?</strong><br />Most applicants complete the first step in under 2 minutes.</p>
-          <p><strong>Is my information secure?</strong><br />Data is submitted over encrypted HTTPS connections.</p>
+          <h3>Common Questions</h3>
+          <p><strong>Does this take a long time?</strong><br />Most visitors finish the guided questions in about 1-2 minutes on mobile.</p>
+          <p><strong>Why ask for income and pay frequency?</strong><br />These details help route your request to relevant lending criteria.</p>
+          <p><strong>Is this a direct lender?</strong><br />No. This page is a matching service that connects requests to partner systems.</p>
+          <p><strong>Is my data protected?</strong><br />Form submissions are sent using encrypted HTTPS connections.</p>
         </div>
       </div>
     </section>
@@ -413,13 +525,159 @@
     const API_URL = "/api/leadscout/submit";
     const form = document.getElementById("loanForm");
     const statusEl = document.getElementById("status");
+    const nextBtn = document.getElementById("nextBtn");
+    const backBtn = document.getElementById("backBtn");
     const submitBtn = document.getElementById("submitBtn");
-    const phoneInput = document.getElementById("phone");
+    const stepProgress = document.getElementById("stepProgress");
+    const stepQuestion = document.getElementById("stepQuestion");
+    const stepInput = document.getElementById("stepInput");
     const floatCta = document.getElementById("floatCta");
+    let currentStep = 0;
+    let isSubmitting = false;
 
-    function get(id) {
-      return document.getElementById(id).value.trim();
-    }
+    const steps = [
+      {
+        id: "firstName",
+        question: "What is your first name?",
+        type: "text",
+        placeholder: "First name",
+        autocomplete: "given-name"
+      },
+      {
+        id: "lastName",
+        question: "What is your last name?",
+        type: "text",
+        placeholder: "Last name",
+        autocomplete: "family-name"
+      },
+      {
+        id: "email",
+        question: "What email should we use to send your offers?",
+        type: "email",
+        placeholder: "you@email.com",
+        autocomplete: "email"
+      },
+      {
+        id: "phone",
+        question: "What phone number can lenders reach you at?",
+        type: "tel",
+        placeholder: "(555) 555-5555",
+        autocomplete: "tel"
+      },
+      {
+        id: "requestedAmount",
+        question: "How much would you like to request?",
+        type: "number",
+        min: 100,
+        max: 35000,
+        defaultValue: "2500"
+      },
+      {
+        id: "purpose",
+        question: "What is the main purpose of the loan?",
+        type: "select",
+        options: [
+          { value: "Home Improvement", label: "Home Improvement" },
+          { value: "Debt Consolidation", label: "Debt Consolidation" },
+          { value: "Emergency", label: "Emergency" },
+          { value: "Car Repair", label: "Car Repair" },
+          { value: "Medical", label: "Medical" },
+          { value: "Other", label: "Other" }
+        ],
+        defaultValue: "Home Improvement"
+      },
+      {
+        id: "creditScore",
+        question: "How would you describe your credit?",
+        type: "choice",
+        options: [
+          { value: "poor", label: "Poor" },
+          { value: "fair", label: "Fair" },
+          { value: "good", label: "Good" },
+          { value: "very_good", label: "Very good" },
+          { value: "excellent", label: "Excellent" }
+        ],
+        defaultValue: "good"
+      },
+      {
+        id: "incomeType",
+        question: "What is your income type?",
+        type: "select",
+        options: [
+          { value: "full_time", label: "Full-time employment" },
+          { value: "part_time", label: "Part-time employment" },
+          { value: "self_employed", label: "Self-employed" },
+          { value: "benefits", label: "Benefits" },
+          { value: "pension", label: "Pension" }
+        ],
+        defaultValue: "full_time"
+      },
+      {
+        id: "directDeposit",
+        question: "Do you receive direct deposit?",
+        type: "choice",
+        options: [
+          { value: "yes", label: "Yes" },
+          { value: "no", label: "No" }
+        ],
+        defaultValue: "yes"
+      },
+      {
+        id: "monthlyIncome",
+        question: "What is your estimated monthly income (CAD)?",
+        type: "number",
+        min: 500,
+        max: 50000,
+        defaultValue: "1500"
+      },
+      {
+        id: "payFrequency",
+        question: "How often do you get paid?",
+        type: "choice",
+        options: [
+          { value: "WEEKLY", label: "Weekly" },
+          { value: "BIWEEKLY", label: "Biweekly" },
+          { value: "SEMIMONTHLY", label: "Semi-monthly" },
+          { value: "MONTHLY", label: "Monthly" }
+        ],
+        defaultValue: "BIWEEKLY"
+      },
+      {
+        id: "province",
+        question: "Which province or territory do you live in?",
+        type: "select",
+        options: [
+          { value: "ON", label: "ON" },
+          { value: "QC", label: "QC" },
+          { value: "BC", label: "BC" },
+          { value: "AB", label: "AB" },
+          { value: "MB", label: "MB" },
+          { value: "NB", label: "NB" },
+          { value: "NL", label: "NL" },
+          { value: "NS", label: "NS" },
+          { value: "PE", label: "PE" },
+          { value: "SK", label: "SK" },
+          { value: "NT", label: "NT" },
+          { value: "NU", label: "NU" },
+          { value: "YT", label: "YT" }
+        ],
+        defaultValue: "QC"
+      },
+      {
+        id: "language",
+        question: "Which language do you prefer?",
+        type: "choice",
+        options: [
+          { value: "en", label: "English" },
+          { value: "fr", label: "French" }
+        ],
+        defaultValue: "en"
+      }
+    ];
+
+    const formState = Object.fromEntries(
+      steps.map((step) => [step.id, step.defaultValue || ""])
+    );
 
     function setStatus(text, isError = false) {
       statusEl.textContent = text;
@@ -443,42 +701,180 @@
       return /^\(\d{3}\)\s\d{3}-\d{4}$/.test(value);
     }
 
+    function escapeHtml(value) {
+      return value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function renderStep() {
+      const step = steps[currentStep];
+      stepProgress.textContent = `Question ${currentStep + 1} of ${steps.length}`;
+      stepQuestion.textContent = step.question;
+
+      if (step.type === "choice") {
+        stepInput.innerHTML = `
+          <div class="wizard-choice">
+            ${step.options
+              .map(
+                (option) => `<button
+                  type="button"
+                  data-choice="${escapeHtml(option.value)}"
+                >${escapeHtml(option.label)}</button>`
+              )
+              .join("")}
+          </div>
+        `;
+      } else if (step.type === "select") {
+        stepInput.innerHTML = `
+          <select id="activeInput" required>
+            ${step.options
+              .map(
+                (option) => `<option value="${escapeHtml(option.value)}">${escapeHtml(option.label)}</option>`
+              )
+              .join("")}
+          </select>
+        `;
+      } else {
+        const minAttr = step.min ? `min="${step.min}"` : "";
+        const maxAttr = step.max ? `max="${step.max}"` : "";
+        const inputMode = step.type === "number" ? "numeric" : "text";
+        const autocomplete = step.autocomplete ? `autocomplete="${step.autocomplete}"` : "";
+        stepInput.innerHTML = `
+          <input
+            id="activeInput"
+            type="${step.type}"
+            placeholder="${step.placeholder || ""}"
+            ${minAttr}
+            ${maxAttr}
+            inputmode="${inputMode}"
+            ${autocomplete}
+            required
+          />
+        `;
+      }
+
+      if (step.type === "choice") {
+        const buttons = stepInput.querySelectorAll("[data-choice]");
+        for (const button of buttons) {
+          if (button.dataset.choice === formState[step.id]) {
+            button.style.borderColor = "#3457ff";
+            button.style.background = "#e9efff";
+          }
+          button.addEventListener("click", () => {
+            formState[step.id] = button.dataset.choice || "";
+            if (currentStep < steps.length - 1) {
+              currentStep += 1;
+              renderStep();
+            } else {
+              submitBtn.click();
+            }
+          });
+        }
+      } else {
+        const input = document.getElementById("activeInput");
+        input.value = formState[step.id] || step.defaultValue || "";
+        input.focus();
+      }
+
+      backBtn.disabled = currentStep === 0 || isSubmitting;
+      nextBtn.hidden = step.type === "choice" || currentStep === steps.length - 1;
+      submitBtn.hidden = currentStep !== steps.length - 1;
+      submitBtn.disabled = isSubmitting;
+    }
+
+    function validateCurrentStep() {
+      const step = steps[currentStep];
+      if (step.type === "choice") {
+        if (!formState[step.id]) {
+          setStatus("Please select an option to continue.", true);
+          return false;
+        }
+        return true;
+      }
+
+      const input = document.getElementById("activeInput");
+      const value = input.value.trim();
+      if (!value) {
+        setStatus("Please complete this question.", true);
+        return false;
+      }
+
+      if (step.id === "phone") {
+        const formatted = formatPhone(value);
+        if (!isValidPhone(formatted)) {
+          setStatus("Phone must be in format (XXX) XXX-XXXX", true);
+          input.value = formatted;
+          return false;
+        }
+        formState.phone = formatted;
+      } else if (step.id === "email") {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          setStatus("Please enter a valid email address.", true);
+          return false;
+        }
+        formState.email = value;
+      } else if (step.type === "number") {
+        const numeric = Number.parseInt(value, 10);
+        if (Number.isNaN(numeric)) {
+          setStatus("Please enter a valid number.", true);
+          return false;
+        }
+        if (step.min && numeric < step.min) {
+          setStatus(`Value must be at least ${step.min}.`, true);
+          return false;
+        }
+        if (step.max && numeric > step.max) {
+          setStatus(`Value must be at most ${step.max}.`, true);
+          return false;
+        }
+        formState[step.id] = String(numeric);
+      } else {
+        formState[step.id] = value;
+      }
+
+      setStatus("");
+      return true;
+    }
+
     function buildPayload() {
       return {
         type: "PERSONAL",
-        language: get("language"),
+        language: formState.language,
         ipAddress: "1.1.1.222",
         userAgent: navigator.userAgent,
         test: true,
         data: {
-          requestedAmount: Number.parseInt(get("requestedAmount"), 10),
-          purpose: "Home Improvement",
-          creditScore: "good",
-          incomeType: "full_time",
-          directDeposit: "yes",
-          email: get("email"),
-          firstName: get("firstName"),
-          lastName: get("lastName"),
-          phone: get("phone"),
+          requestedAmount: Number.parseInt(formState.requestedAmount, 10),
+          purpose: formState.purpose,
+          creditScore: formState.creditScore,
+          incomeType: formState.incomeType,
+          directDeposit: formState.directDeposit,
+          email: formState.email,
+          firstName: formState.firstName,
+          lastName: formState.lastName,
+          phone: formState.phone,
           birthDate: "1976-01-01",
           address: "866 rue Elgar",
           postalCode: "H3E-1C2",
           city: "Montreal",
-          province: get("province"),
+          province: formState.province,
           country: "CA",
           timeAtAddress: 12,
           ownHome: "no",
           rentMortgagePayment: 1200,
           financialSituation: "none",
-          monthlyIncome: 1500,
+          monthlyIncome: Number.parseInt(formState.monthlyIncome, 10),
           jobTitle: "Software Engineer",
           employerName: "Google",
           employedMonths: 12,
-          payFrequency: "BIWEEKLY",
+          payFrequency: formState.payFrequency,
           payDate1: "2024-06-12",
           unsecuredDebtAmount: 0,
-          optIn: false,
-          optInPhone: false
+          optIn: true,
+          optInPhone: true
         },
         extra: {
           aff_utm_source: "SimpleLander"
@@ -513,19 +909,45 @@
     floatCta.addEventListener("click", () => {
       const formCard = document.getElementById("formCard");
       formCard.scrollIntoView({ behavior: "smooth", block: "start" });
-      const firstName = document.getElementById("firstName");
-      firstName.focus();
+      const activeInput = document.getElementById("activeInput");
+      if (activeInput) {
+        activeInput.focus();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (!validateCurrentStep()) {
+        return;
+      }
+      if (currentStep < steps.length - 1) {
+        currentStep += 1;
+        renderStep();
+      }
+    });
+
+    backBtn.addEventListener("click", () => {
+      if (currentStep > 0) {
+        currentStep -= 1;
+        setStatus("");
+        renderStep();
+      }
     });
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      phoneInput.value = formatPhone(phoneInput.value);
-      if (!isValidPhone(phoneInput.value)) {
-        setStatus("Phone must be in format (XXX) XXX-XXXX", true);
+      if (!validateCurrentStep()) {
+        return;
+      }
+      if (currentStep < steps.length - 1) {
+        currentStep += 1;
+        renderStep();
         return;
       }
 
+      isSubmitting = true;
       submitBtn.disabled = true;
+      backBtn.disabled = true;
+      nextBtn.disabled = true;
       setStatus("Checking offers...");
 
       try {
@@ -544,13 +966,14 @@
       } catch (error) {
         setStatus(error.message || "Something went wrong.", true);
       } finally {
+        isSubmitting = false;
         submitBtn.disabled = false;
+        nextBtn.disabled = false;
+        renderStep();
       }
     });
 
-    phoneInput.addEventListener("input", () => {
-      phoneInput.value = formatPhone(phoneInput.value);
-    });
+    renderStep();
   </script>
 </body>
 </html>
