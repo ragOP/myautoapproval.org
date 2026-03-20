@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ClearPath — Personal Loans</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0D1F3C;
+  --navy2:#152B55;
+  --blue:#1B4FD8;
+  --blue2:#2B62F5;
+  --teal:#00A878;
+  --teal-lt:#E6F7F2;
+  --white:#FFFFFF;
+  --bg:#F6F8FC;
+  --surface:#FFFFFF;
+  --border:#E3E9F4;
+  --border2:#C8D4EC;
+  --text:#0D1F3C;
+  --sub:#536280;
+  --muted:#8494B0;
+  --r:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overscroll-behavior:none}
+
+/* NAV */
+.nav{height:52px;background:var(--navy);display:flex;align-items:center;padding:0 20px;justify-content:space-between;position:sticky;top:0;z-index:50}
+.nav-logo{font-family:'Bricolage Grotesque',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;letter-spacing:-0.03em}
+.nav-logo span{color:#5B9BFF}
+.nav-right{font-size:11.5px;font-weight:600;color:rgba(255,255,255,0.45);letter-spacing:0.04em;text-transform:uppercase}
+
+/* HERO */
+.hero{background:var(--navy);padding:32px 20px 52px;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.hero-fade{position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(transparent,var(--navy));pointer-events:none}
+.hero-inner{position:relative}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.6);font-size:11px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:5px 12px;border-radius:100px;margin-bottom:18px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0}
+.hero h1{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(1.9rem,6.5vw,2.6rem);font-weight:800;color:#fff;line-height:1.07;letter-spacing:-0.03em;margin-bottom:12px}
+.hero h1 b{color:#5B9BFF;font-weight:800}
+.hero-desc{font-size:14.5px;color:rgba(255,255,255,0.55);line-height:1.65;max-width:320px;margin-bottom:24px}
+.hero-stats{display:flex;gap:0;border:1px solid rgba(255,255,255,0.1);border-radius:12px;overflow:hidden}
+.hs{flex:1;padding:12px 0;text-align:center;border-right:1px solid rgba(255,255,255,0.1)}
+.hs:last-child{border-right:none}
+.hs-n{font-family:'Bricolage Grotesque',sans-serif;font-size:1.05rem;font-weight:700;color:#fff;letter-spacing:-0.02em}
+.hs-l{font-size:10.5px;color:rgba(255,255,255,0.4);margin-top:1px;font-weight:500}
+
+/* TRUST */
+.trust{background:#fff;margin:16px;border-radius:14px;padding:14px 16px;border:1px solid var(--border);display:flex;gap:0;position:relative;z-index:2;margin-top:-22px}
+.tr{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;border-right:1px solid var(--border);padding:0 8px}
+.tr:last-child{border-right:none}
+.tr-icon{width:28px;height:28px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center}
+.tr-label{font-size:10.5px;font-weight:600;color:var(--sub);text-align:center;line-height:1.3}
+/* SVG icons inline */
+svg{display:block}
+
+/* FUNNEL */
+.fw{padding:16px;padding-top:12px}
+.fcard{background:#fff;border-radius:18px;border:1px solid var(--border);overflow:hidden}
+
+/* Progress */
+.prog-bar{display:flex;gap:3px;padding:16px 16px 0}
+.pb-seg{flex:1;height:3px;border-radius:2px;background:var(--border);overflow:hidden}
+.pb-fill{height:100%;border-radius:2px;background:var(--blue);width:0%;transition:width 0.45s cubic-bezier(.4,0,.2,1)}
+
+/* Step body */
+.fbody{padding:24px 20px 22px}
+.step{display:none}
+.step.active{display:block;animation:up 0.32s cubic-bezier(.22,.68,0,1.15)}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.qlabel{font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--blue);margin-bottom:7px}
+.qtext{font-family:'Bricolage Grotesque',sans-serif;font-size:1.3rem;font-weight:700;color:var(--navy);line-height:1.22;margin-bottom:22px;letter-spacing:-0.02em}
+
+/* Slider */
+.sdisp{margin-bottom:18px}
+.sval{font-family:'Bricolage Grotesque',sans-serif;font-size:2.5rem;font-weight:800;color:var(--navy);letter-spacing:-0.04em;line-height:1}
+.shint{font-size:12px;color:var(--muted);margin-top:5px;font-weight:500}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:linear-gradient(to right,var(--blue) var(--p,20%),var(--border) var(--p,20%));outline:none;cursor:pointer;margin:16px 0 6px;display:block}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:2.5px solid var(--blue);box-shadow:0 1px 10px rgba(27,79,216,0.22);cursor:pointer;transition:transform 0.15s}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.18)}
+.sends{display:flex;justify-content:space-between;font-size:11.5px;font-weight:600;color:var(--muted)}
+
+/* Options */
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{background:var(--bg);border:1.5px solid var(--border);border-radius:11px;padding:13px 15px;display:flex;align-items:center;gap:13px;cursor:pointer;text-align:left;width:100%;font-family:'DM Sans',sans-serif;transition:border-color 0.15s,background 0.15s}
+.opt:active{transform:scale(0.988)}
+.opt.sel{border-color:var(--blue);background:#F0F5FF}
+.opt-mark{width:18px;height:18px;border-radius:50%;border:2px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.15s;background:#fff}
+.opt.sel .opt-mark{background:var(--blue);border-color:var(--blue)}
+.opt-mark-dot{width:6px;height:6px;border-radius:50%;background:#fff;transform:scale(0);transition:transform 0.18s}
+.opt.sel .opt-mark-dot{transform:scale(1)}
+.opt-content{flex:1}
+.opt-title{font-size:14.5px;font-weight:600;color:var(--text);line-height:1}
+.opt-sub{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* Buttons */
+.brow{display:flex;gap:8px;margin-top:22px}
+.bbk{width:44px;height:48px;border-radius:10px;border:1.5px solid var(--border);background:#fff;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color 0.15s}
+.bbk:hover{border-color:var(--blue2)}
+.bnx{flex:1;height:48px;border-radius:10px;border:none;background:var(--blue);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.18s;opacity:.38;pointer-events:none;letter-spacing:0.01em}
+.bnx.on{opacity:1;pointer-events:all}
+.bnx.on:active{transform:scale(0.97);background:var(--navy2)}
+.bnx.on:hover{background:var(--blue2);box-shadow:0 4px 18px rgba(27,79,216,0.28)}
+
+/* CONGRATS */
+.cg{display:none;animation:up 0.4s cubic-bezier(.22,.68,0,1.15)}
+.cg.show{display:block}
+
+.cg-top{background:var(--navy);padding:28px 20px 24px;text-align:center}
+.cg-badge{display:inline-flex;align-items:center;gap:6px;background:var(--teal-lt);color:var(--teal);font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:16px}
+.cg-check{width:10px;height:10px;border-radius:50%;background:var(--teal);flex-shrink:0}
+.cg-h{font-family:'Bricolage Grotesque',sans-serif;font-size:1.75rem;font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1.1;margin-bottom:8px}
+.cg-h span{color:#5B9BFF}
+.cg-p{font-size:13.5px;color:rgba(255,255,255,0.5);line-height:1.6}
+
+.cg-card{background:#fff;margin:16px;border-radius:16px;border:1px solid var(--border);overflow:hidden}
+
+.rate-block{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border)}
+.rb{padding:16px 12px;text-align:center;border-right:1px solid var(--border)}
+.rb:last-child{border-right:none}
+.rb-l{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.rb-v{font-family:'Bricolage Grotesque',sans-serif;font-size:1.2rem;font-weight:800;color:var(--navy);letter-spacing:-0.02em}
+.rb-v.accent{color:var(--teal)}
+
+.sum-block{padding:14px 16px;border-bottom:1px solid var(--border)}
+.sb-label{font-size:10.5px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.sb-chips{display:flex;flex-wrap:wrap;gap:6px}
+.sc{background:var(--bg);border:1px solid var(--border2);color:var(--sub);font-size:12px;font-weight:600;padding:4px 12px;border-radius:100px}
+
+.offer-note{padding:13px 16px;background:var(--bg);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.on-icon{width:32px;height:32px;border-radius:8px;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.on-text{font-size:12.5px;color:var(--sub);line-height:1.5}
+.on-text strong{color:var(--text);font-weight:600}
+
+.phone-row{padding:16px;display:flex;align-items:center;gap:12px}
+.phone-icon{width:40px;height:40px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.phone-detail{flex:1}
+.phone-label{font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.phone-num{font-family:'Bricolage Grotesque',sans-serif;font-size:1.2rem;font-weight:700;color:var(--navy);letter-spacing:-0.01em}
+.avail{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--teal);margin-top:1px}
+.av-dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}
+
+.cg-cta{padding:0 16px 18px;display:flex;flex-direction:column;gap:8px}
+.cta-call{display:block;width:100%;padding:15px;background:var(--navy);color:#fff;border:none;border-radius:11px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;text-align:center;text-decoration:none;cursor:pointer;transition:all 0.18s;letter-spacing:0.01em}
+.cta-call:active{transform:scale(0.97)}
+.cta-call:hover{background:var(--navy2);box-shadow:0 4px 20px rgba(13,31,60,0.25)}
+.cta-restart{background:none;border:1.5px solid var(--border);border-radius:11px;padding:12px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.15s;width:100%}
+.cta-restart:hover{border-color:var(--blue);color:var(--blue)}
+.disclaimer{font-size:10.5px;color:var(--muted);text-align:center;line-height:1.65;padding:0 4px 4px}
+
+/* TESTIMONIALS */
+.section{padding:28px 16px}
+.s-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:5px}
+.s-h{font-family:'Bricolage Grotesque',sans-serif;font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:5px;letter-spacing:-0.025em;line-height:1.15}
+.s-sub{font-size:13.5px;color:var(--sub);line-height:1.55;margin-bottom:18px}
+
+.rating-bar{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:14px}
+.rb-score{font-family:'Bricolage Grotesque',sans-serif;font-size:2rem;font-weight:800;color:var(--navy);letter-spacing:-0.04em;line-height:1}
+.rb-right{}
+.rb-stars{display:flex;gap:2px;margin-bottom:3px}
+.star{width:14px;height:14px}
+.rb-ct{font-size:11.5px;color:var(--muted);font-weight:500}
+
+.tcard{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:10px}
+.tc-stars{display:flex;gap:2px;margin-bottom:11px}
+.tc-text{font-size:14px;color:#334155;line-height:1.72;margin-bottom:14px;font-style:italic}
+.tc-foot{display:flex;align-items:center;gap:10px}
+.tc-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;font-size:12px;font-weight:700;flex-shrink:0}
+.av-b{background:#EEF3FF;color:var(--blue)} .av-t{background:var(--teal-lt);color:var(--teal)} .av-s{background:#F0EEFF;color:#5B46D6}
+.tc-name{font-size:13.5px;font-weight:700;color:var(--navy)}
+.tc-meta{font-size:11.5px;color:var(--muted)}
+.tc-amt{margin-left:auto;font-size:11px;font-weight:700;color:var(--teal);background:var(--teal-lt);padding:3px 10px;border-radius:100px}
+.verified{display:flex;align-items:center;gap:3px;font-size:10.5px;font-weight:600;color:var(--teal);margin-top:2px}
+
+/* FAQ */
+.faq{background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.faq-q{padding:15px 16px;display:flex;align-items:flex-start;justify-content:space-between;cursor:pointer;gap:12px}
+.faq-qt{font-size:14px;font-weight:600;color:var(--navy);line-height:1.35;flex:1}
+.faq-arr{width:24px;height:24px;border-radius:50%;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.25s;margin-top:1px}
+.faq.open .faq-arr{background:var(--navy);border-color:var(--navy)}
+.faq.open .faq-arr svg{transform:rotate(180deg)}
+.faq-arr svg{transition:transform 0.25s}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.32s ease}
+.faq-ai{padding:0 16px 15px;font-size:13.5px;color:var(--sub);line-height:1.75}
+
+/* BOTTOM */
+.bcta{background:var(--navy);padding:36px 20px;text-align:center}
+.bcta h2{font-family:'Bricolage Grotesque',sans-serif;font-size:1.55rem;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:8px;line-height:1.15}
+.bcta p{font-size:13.5px;color:rgba(255,255,255,0.45);margin-bottom:22px}
+.bcta-btn{display:inline-block;padding:14px 32px;background:var(--blue);color:#fff;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14.5px;font-weight:600;text-decoration:none;cursor:pointer;border:none;letter-spacing:0.01em;transition:all 0.18s}
+.bcta-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+
+footer{background:#07122E;padding:20px 20px 28px;text-align:center;font-size:11px;color:rgba(255,255,255,0.28);line-height:2}
+footer a{color:rgba(255,255,255,0.4);text-decoration:none}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">Clear<span>Path</span></div>
+  <div class="nav-right">FDIC Partner</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-fade"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">
+      <span class="live-dot"></span>
+      No hard credit pull to check rates
+    </div>
+    <h1>Personal loans<br>up to <b>$50,000</b></h1>
+    <p class="hero-desc">Low fixed rates. No origination fees. Funds as fast as next business day.</p>
+    <div class="hero-stats">
+      <div class="hs"><div class="hs-n">6.99%</div><div class="hs-l">APR from</div></div>
+      <div class="hs"><div class="hs-n">$50K</div><div class="hs-l">max loan</div></div>
+      <div class="hs"><div class="hs-n">500K+</div><div class="hs-l">funded</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="tr">
+    <div class="tr-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="10" rx="2" stroke="#1B4FD8" stroke-width="1.4"/><path d="M1 7h14" stroke="#1B4FD8" stroke-width="1.4"/><path d="M5 10.5h2" stroke="#1B4FD8" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </div>
+    <div class="tr-label">FDIC Partner</div>
+  </div>
+  <div class="tr">
+    <div class="tr-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5L2 4v4c0 3.3 2.6 5.7 6 6.5 3.4-.8 6-3.2 6-6.5V4L8 1.5z" stroke="#1B4FD8" stroke-width="1.4" stroke-linejoin="round"/><path d="M5.5 8l2 2 3-3" stroke="#1B4FD8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="tr-label">SSL Secured</div>
+  </div>
+  <div class="tr">
+    <div class="tr-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#1B4FD8" stroke-width="1.4"/><path d="M8 5v3.5l2 2" stroke="#1B4FD8" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </div>
+    <div class="tr-label">Next-Day Funds</div>
+  </div>
+  <div class="tr">
+    <div class="tr-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.8 4H14l-3.5 2.8 1.3 4.2L8 10 4.2 12.5l1.3-4.2L2 5.5h4.2L8 1.5z" stroke="#1B4FD8" stroke-width="1.3" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="tr-label">BBB Accredited</div>
+  </div>
+</div>
+
+<!-- FUNNEL -->
+<div class="fw">
+  <div class="fcard" id="fcard">
+    <div class="prog-bar" id="progbar">
+      <div class="pb-seg"><div class="pb-fill" id="pb0"></div></div>
+      <div class="pb-seg"><div class="pb-fill" id="pb1"></div></div>
+      <div class="pb-seg"><div class="pb-fill" id="pb2"></div></div>
+      <div class="pb-seg"><div class="pb-fill" id="pb3"></div></div>
+    </div>
+    <div class="fbody">
+
+      <!-- S1 -->
+      <div class="step active" id="s1">
+        <div class="qlabel">Step 1 of 4</div>
+        <div class="qtext">How much do you need?</div>
+        <div class="sdisp">
+          <div class="sval" id="av">$10,000</div>
+          <div class="shint">Slide to choose your loan amount</div>
+        </div>
+        <input type="range" id="ar" min="1000" max="50000" step="500" value="10000">
+        <div class="sends"><span>$1,000</span><span>$50,000</span></div>
+        <div class="brow"><button class="bnx on" onclick="go(1)">Continue</button></div>
+      </div>
+
+      <!-- S2 -->
+      <div class="step" id="s2">
+        <div class="qlabel">Step 2 of 4</div>
+        <div class="qtext">Employment status?</div>
+        <div class="opts">
+          <button class="opt" onclick="pick(this,'s2','emp','Full-time employed')">
+            <div class="opt-mark"><div class="opt-mark-dot"></div></div>
+            <div class="opt-content"><div class="opt-title">Employed full-time</div><div class="opt-sub">W-2 salaried or hourly</div></div>
+          </button>
+          <button class="opt" onclick="pick(this,'s2','emp','Self-employed')">
+            <div class="opt-mark"><div class="opt-mark-dot"></div></div>
+            <div class="opt-content"><div class="opt-title">Self-employed / Business owner</div><div class="opt-sub">1099 or LLC</div></div>
+          </button>
+          <button class="opt" onclick="pick(this,'s2','emp','Part-time or gig')">
+            <div class="opt-mark"><div class="opt-mark-dot"></div></div>
+            <div class="opt-content"><div class="opt-title">Part-time or gig worker</div><div class="opt-sub">Freelancer, contractor</div></div>
+          </button>
+          <button class="opt" onclick="pick(this,'s2','emp','Retired / Fixed income')">
+            <div class="opt-mark"><div class="opt-mark-dot"></div></div>
+            <div class="opt-content"><div class="opt-title">Retired / Fixed income</div><div class="opt-sub">Social Security, pension</div></div>
+          </button>
+        </div>
+        <div class="brow">
+          <button class="bbk" onclick="go(0)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="#8494B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="bnx" id="n2" onclick="go(2)">Continue</button>
+        </div>
+      </div>
+
+      <!-- S3 -->
+      <div class="step" id="s3">
+        <div class="qlabel">Step 3 of 4</div>
+        <div class="qtext">Annual income?</div>
+        <div class="sdisp">
+          <div class="sval" id="iv">$65,000</div>
+          <div class="shint">Gross income before taxes</div>
+        </div>
+        <input type="range" id="ir" min="20000" max="300000" step="5000" value="65000">
+        <div class="sends"><span>$20K</span><span>$300K+</span></div>
+        <div class="brow">
+          <button class="bbk" onclick="go(1)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="#8494B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="bnx on" onclick="go(3)">Continue</button>
+        </div>
+      </div>
+
+      <!-- S4 -->
+      <div class="step" id="s4">
+        <div class="qlabel">Step 4 of 4</div>
+        <div class="qtext">Credit score range?</div>
+        <div class="opts">
+          <button class="opt" onclick="pick(this,'s4','cred','Excellent — 750+')">
+            <div class="opt-mark"><div class="opt-mark-dot"></div></div>
+            <div class="opt-content"><div class="opt-title">Excellent — 750+</div><div class="opt-sub">Qualify for our lowest rates</div></div>
+          </button>
+          <button class="opt" onclick="pick(this,'s4','cred','Good — 700 to 749')">
+            <div class="opt-mark"><div class="opt-mark-dot"></div></div>
+            <div class="opt-content"><div class="opt-title">Good — 700 to 749</div><div class="opt-sub">Competitive rates available</div></div>
+          </button>
+          <button class="opt" onclick="pick(this,'s4','cred','Fair — 650 to 699')">
+            <div class="opt-mark"><div class="opt-mark-dot"></div></div>
+            <div class="opt-content"><div class="opt-title">Fair — 650 to 699</div><div class="opt-sub">Still a strong candidate</div></div>
+          </button>
+          <button class="opt" onclick="pick(this,'s4','cred','Building — below 650')">
+            <div class="opt-mark"><div class="opt-mark-dot"></div></div>
+            <div class="opt-content"><div class="opt-title">Building — below 650</div><div class="opt-sub">We may still have options for you</div></div>
+          </button>
+        </div>
+        <div class="brow">
+          <button class="bbk" onclick="go(2)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="#8494B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="bnx" id="n4" onclick="showCg()">See My Rates</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONGRATS -->
+  <div class="cg" id="cgwrap">
+    <div class="cg-top">
+      <div class="cg-badge"><span class="cg-check"></span> Pre-Qualified</div>
+      <div class="cg-h">Your offer<br>is <span>ready.</span></div>
+      <p class="cg-p">No impact to your credit score. Lock in your rate by calling us today.</p>
+    </div>
+
+    <div class="cg-card">
+      <div class="rate-block">
+        <div class="rb"><div class="rb-l">Rate from</div><div class="rb-v accent">6.99%</div></div>
+        <div class="rb"><div class="rb-l">Up to</div><div class="rb-v" id="cg-amt">$10,000</div></div>
+        <div class="rb"><div class="rb-l">Terms</div><div class="rb-v">24–84 mo</div></div>
+      </div>
+
+      <div class="sum-block">
+        <div class="sb-label">Your profile</div>
+        <div class="sb-chips" id="chips"></div>
+      </div>
+
+      <div class="offer-note">
+        <div class="on-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#0D1F3C" stroke-width="1.4"/><path d="M8 5v3.5l2 2" stroke="#0D1F3C" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <div class="on-text">Offer reserved for <strong>48 hours.</strong> No origination fee. No prepayment penalty.</div>
+      </div>
+
+      <div class="phone-row">
+        <div class="phone-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 3h3l1.5 3.5-1.75 1.25c.9 1.8 2.5 3.35 4.25 4.25L11.75 10 15.5 11.5v3c0 .83-.67 1.5-1.5 1.5C6.5 16 2 11.5 2 5c0-.83.67-1.5 1.5-1.5z" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="phone-detail">
+          <div class="phone-label">Speak with a specialist</div>
+          <div class="phone-num">(800) 555-0199</div>
+          <div class="avail"><span class="av-dot"></span>Available Mon–Fri, 8am–8pm ET</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cg-cta">
+      <a class="cta-call" href="tel:+18005550199">Call to lock in your rate</a>
+      <button class="cta-restart" onclick="restart()">Start over</button>
+      <div class="disclaimer">Checking your rate uses a soft inquiry and does not affect your credit score. By calling you agree to our <a href="#" style="color:var(--blue)">Terms</a> and <a href="#" style="color:var(--blue)">Privacy Policy</a>. APR 6.99%–35.99%. Subject to credit approval.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="section" style="background:#fff;border-top:1px solid var(--border)">
+  <div class="s-eyebrow">Customer reviews</div>
+  <div class="s-h">Trusted by 500,000+ Americans</div>
+  <div class="s-sub">Real people who got funded with ClearPath.</div>
+
+  <div class="rating-bar">
+    <div class="rb-score">4.9</div>
+    <div class="rb-right">
+      <div class="rb-stars">
+        <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+        <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+        <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+        <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+        <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+      </div>
+      <div class="rb-ct">Based on 18,400+ verified reviews</div>
+    </div>
+  </div>
+
+  <div class="tcard">
+    <div class="tc-stars">
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+    </div>
+    <p class="tc-text">"I needed $15K for home repairs fast. Applied at 9pm, had an offer by morning, money in my account the next afternoon. Rate was better than my credit union by almost 3 points."</p>
+    <div class="tc-foot">
+      <div class="tc-av av-b">JM</div>
+      <div>
+        <div class="tc-name">James M.</div>
+        <div class="tc-meta">Austin, TX
+          <span class="verified"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2.5 4-4" stroke="#00A878" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</span>
+        </div>
+      </div>
+      <div class="tc-amt">$15K funded</div>
+    </div>
+  </div>
+
+  <div class="tcard">
+    <div class="tc-stars">
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+    </div>
+    <p class="tc-text">"Consolidated $22K in credit card debt. Monthly payment dropped by over $400 and I have one simple bill. The process took 12 minutes from application to approval."</p>
+    <div class="tc-foot">
+      <div class="tc-av av-t">SC</div>
+      <div>
+        <div class="tc-name">Sarah C.</div>
+        <div class="tc-meta">Chicago, IL
+          <span class="verified"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2.5 4-4" stroke="#00A878" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</span>
+        </div>
+      </div>
+      <div class="tc-amt">$22K funded</div>
+    </div>
+  </div>
+
+  <div class="tcard">
+    <div class="tc-stars">
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+      <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.6 3.5H12l-2.8 2.3 1 3.7L7 8.6l-3.2 1.9 1-3.7L2 4.5h3.4L7 1z" fill="#F4A823"/></svg>
+    </div>
+    <p class="tc-text">"As a freelancer I assumed getting approved would be a nightmare. ClearPath considered my 1099 income without any pushback. Smooth from start to finish."</p>
+    <div class="tc-foot">
+      <div class="tc-av av-s">DT</div>
+      <div>
+        <div class="tc-name">David T.</div>
+        <div class="tc-meta">Denver, CO
+          <span class="verified"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2.5 4-4" stroke="#00A878" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</span>
+        </div>
+      </div>
+      <div class="tc-amt">$8K funded</div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+  <div class="s-eyebrow">Questions</div>
+  <div class="s-h">FAQ</div>
+  <div class="s-sub">The most common things people ask before applying.</div>
+
+  <div class="faq">
+    <div class="faq-q" onclick="tf(this)"><span class="faq-qt">Does checking my rate affect my credit score?</span><span class="faq-arr"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#8494B0" stroke-width="1.6" stroke-linecap="round"/></svg></span></div>
+    <div class="faq-a"><div class="faq-ai">No. We use a soft credit inquiry to show you rates — this has zero impact on your score. A hard inquiry only occurs when you formally accept an offer and provide consent.</div></div>
+  </div>
+  <div class="faq">
+    <div class="faq-q" onclick="tf(this)"><span class="faq-qt">How quickly will I receive my funds?</span><span class="faq-arr"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#8494B0" stroke-width="1.6" stroke-linecap="round"/></svg></span></div>
+    <div class="faq-a"><div class="faq-ai">Most approved borrowers receive funds the next business day after verification is complete. Some banks support same-day ACH. Timing may vary by your financial institution.</div></div>
+  </div>
+  <div class="faq">
+    <div class="faq-q" onclick="tf(this)"><span class="faq-qt">Are there any fees or prepayment penalties?</span><span class="faq-arr"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#8494B0" stroke-width="1.6" stroke-linecap="round"/></svg></span></div>
+    <div class="faq-a"><div class="faq-ai">Zero origination fees. Zero prepayment penalties. You can pay off your loan at any time with no additional charges. What you see is exactly what you pay.</div></div>
+  </div>
+  <div class="faq">
+    <div class="faq-q" onclick="tf(this)"><span class="faq-qt">What can I use the loan for?</span><span class="faq-arr"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#8494B0" stroke-width="1.6" stroke-linecap="round"/></svg></span></div>
+    <div class="faq-a"><div class="faq-ai">Debt consolidation, home improvements, medical expenses, moving costs, weddings, major purchases — almost anything. We do not fund illegal activities or stock market investments.</div></div>
+  </div>
+  <div class="faq">
+    <div class="faq-q" onclick="tf(this)"><span class="faq-qt">What are the basic eligibility requirements?</span><span class="faq-arr"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#8494B0" stroke-width="1.6" stroke-linecap="round"/></svg></span></div>
+    <div class="faq-a"><div class="faq-ai">US resident, age 18+, valid Social Security Number, active checking or savings account, minimum annual income of $20,000. We consider all credit profiles.</div></div>
+  </div>
+</div>
+
+<!-- BOTTOM CTA -->
+<div class="bcta">
+  <h2>Check your rate.<br>Takes 2 minutes.</h2>
+  <p>No commitment. No credit impact.</p>
+  <a href="#fcard" class="bcta-btn" onclick="scrollTop()">Get my rate</a>
+</div>
+
+<footer>
+  © 2025 ClearPath Financial, LLC &nbsp;·&nbsp; NMLS #000000 &nbsp;·&nbsp; Equal Housing Lender<br>
+  <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms of Service</a> &nbsp;·&nbsp; <a href="#">Licenses</a><br>
+  APR range: 6.99%–35.99%. Example: $10,000 loan, 36 months, 12.99% APR = $336/mo, total $12,096. Subject to credit approval.
+</footer>
+
+<script>
+const steps=['s1','s2','s3','s4'];
+let cur=0;
+const sel={};
+
+function usd(n){return '$'+Number(n).toLocaleString('en-US');}
+function sp(el,id){const p=((+el.value-+el.min)/(+el.max-+el.min)*100).toFixed(2)+'%';el.style.setProperty('--p',p);document.getElementById(id).textContent=usd(+el.value);}
+
+const ar=document.getElementById('ar');
+ar.addEventListener('input',function(){sp(this,'av');sel.amount=usd(+this.value);});
+sel.amount=usd(10000);sp(ar,'av');
+
+const ir=document.getElementById('ir');
+ir.addEventListener('input',function(){sp(this,'iv');sel.income=usd(+this.value)+'/yr';});
+sel.income=usd(65000)+'/yr';sp(ir,'iv');
+
+function pick(el,sid,k,v){
+  document.querySelectorAll('#'+sid+' .opt').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');sel[k]=v;
+  const nb=document.getElementById('n'+sid.replace('s',''));
+  if(nb)nb.classList.add('on');
+}
+
+function go(i){
+  document.getElementById(steps[cur]).classList.remove('active');
+  cur=i;
+  document.getElementById(steps[cur]).classList.add('active');
+  for(let j=0;j<4;j++)document.getElementById('pb'+j).style.width=(j<i?'100%':j===i?'40%':'0%');
+  document.getElementById('fcard').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function showCg(){
+  document.getElementById('fcard').style.display='none';
+  const cg=document.getElementById('cgwrap');
+  cg.classList.add('show');
+  document.getElementById('cg-amt').textContent=sel.amount||'$10,000';
+  const ch=document.getElementById('chips');ch.innerHTML='';
+  [sel.amount,sel.emp,sel.income,sel.cred].filter(Boolean).forEach(t=>{
+    const c=document.createElement('span');c.className='sc';c.textContent=t;ch.appendChild(c);
+  });
+  cg.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function restart(){
+  document.getElementById('cgwrap').classList.remove('show');
+  document.getElementById('fcard').style.display='';
+  cur=0;steps.forEach((s,i)=>document.getElementById(s).classList.toggle('active',i===0));
+  for(let j=0;j<4;j++)document.getElementById('pb'+j).style.width='0%';
+  document.getElementById('fcard').scrollIntoView({behavior:'smooth'});
+}
+
+function tf(el){
+  const item=el.closest('.faq');
+  const ans=item.querySelector('.faq-a');
+  const open=item.classList.contains('open');
+  document.querySelectorAll('.faq.open').forEach(f=>{f.classList.remove('open');f.querySelector('.faq-a').style.maxHeight='0';});
+  if(!open){item.classList.add('open');ans.style.maxHeight=ans.querySelector('.faq-ai').scrollHeight+'px';}
+}
+
+function scrollTop(){document.getElementById('fcard').scrollIntoView({behavior:'smooth'});}
+</script>
+</body>
+</html>
