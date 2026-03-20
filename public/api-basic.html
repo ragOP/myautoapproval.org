@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Benefit Help - Fast Cash Match</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070b18;
+      --surface: rgba(10, 21, 47, 0.86);
+      --surface-2: rgba(8, 17, 38, 0.92);
+      --text: #ecf2ff;
+      --muted: #a4b3d9;
+      --line: #203566;
+      --brand: #7b87ff;
+      --brand-dark: #646ff2;
+      --accent: #35d3ff;
+      --ok: #47e3a7;
+      --error: #ff9ea2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(1000px 500px at -8% -15%, rgba(89, 115, 255, 0.47), transparent 58%),
+        radial-gradient(850px 430px at 115% -12%, rgba(51, 206, 255, 0.4), transparent 58%),
+        linear-gradient(165deg, #070b18 0%, #0a1430 56%, #0f1f4a 100%);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      display: flex;
+      justify-content: center;
+      padding: 18px 14px 30px;
+    }
+
+    .wrap {
+      width: min(980px, 100%);
+      display: grid;
+      gap: 16px;
+      align-content: center;
+    }
+
+    .hero {
+      background: linear-gradient(145deg, rgba(16, 30, 64, 0.86), rgba(10, 22, 48, 0.7));
+      border: 1px solid rgba(97, 121, 197, 0.35);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 26px 65px rgba(0, 6, 23, 0.42);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(126, 148, 255, 0.42);
+      background: rgba(98, 117, 228, 0.2);
+      color: #dbe6ff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: "Manrope", "Inter", sans-serif;
+      font-size: clamp(1.68rem, 5.8vw, 2.55rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, #96a5ff, #42d8ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      margin: 10px 0 0;
+      color: #b4c3e8;
+      font-size: 0.95rem;
+      max-width: 57ch;
+    }
+
+    .trust-row {
+      margin-top: 13px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .trust-chip {
+      border: 1px solid #2a4686;
+      background: rgba(12, 25, 56, 0.82);
+      color: #d8e2ff;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 0.77rem;
+      font-weight: 600;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .stat {
+      border: 1px solid #26417c;
+      background: rgba(12, 25, 56, 0.78);
+      border-radius: 13px;
+      padding: 9px 10px;
+    }
+
+    .stat b {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.1;
+      color: #f3f6ff;
+    }
+
+    .stat span {
+      font-size: 0.76rem;
+      color: #a5b7e3;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px 16px 16px;
+      box-shadow:
+        0 30px 90px rgba(3, 8, 27, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+    }
+
+    .top-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 11px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(72, 229, 168, 0.12);
+      border: 1px solid rgba(72, 229, 168, 0.4);
+      color: #c8fbe8;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    h2 {
+      margin: 0 0 6px;
+      font-size: clamp(1.24rem, 4.5vw, 1.56rem);
+      line-height: 1.15;
+      font-family: "Manrope", "Inter", sans-serif;
+    }
+
+    .sub {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 0.89rem;
+    }
+
+    .progress {
+      margin: 0 0 6px;
+      color: #b4c4ef;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .bar {
+      width: 100%;
+      height: 8px;
+      margin-bottom: 14px;
+      border-radius: 999px;
+      background: #1b2a53;
+      overflow: hidden;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #6d7eff, #37d4ff);
+      box-shadow: 0 0 20px rgba(78, 196, 255, 0.45);
+      transition: width 0.28s ease;
+    }
+
+    .q {
+      margin: 0 0 12px;
+      font-size: 1.06rem;
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 13px 12px;
+      background: #101d40;
+      color: #f7f9ff;
+      font: inherit;
+    }
+
+    select {
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, #9cb1f8 50%), linear-gradient(135deg, #9cb1f8 50%, transparent 50%);
+      background-position: calc(100% - 18px) calc(50% - 4px), calc(100% - 12px) calc(50% - 4px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+    }
+
+    input::placeholder {
+      color: #8da0d1;
+    }
+
+    input:focus,
+    select:focus,
+    button:focus {
+      outline: 2px solid rgba(109, 126, 255, 0.55);
+      outline-offset: 2px;
+    }
+
+    .choices {
+      display: grid;
+      gap: 8px;
+    }
+
+    .choice-btn {
+      position: relative;
+      text-align: left;
+      font-weight: 700;
+      background: #101b3b;
+      border-width: 1.5px;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.2s ease;
+    }
+
+    .choice-btn:hover {
+      background: #152652;
+      border-color: #6f86df;
+      transform: translateY(-1px);
+    }
+
+    .choice-btn.is-selected {
+      border-color: #7a89ff;
+      background: #1a3167;
+      box-shadow: 0 0 0 1px rgba(124, 142, 255, 0.25) inset;
+    }
+
+    .actions {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .btn-secondary {
+      background: #121f46;
+      color: #dce3ff;
+      border-color: #2f488d;
+    }
+
+    .btn-primary {
+      border: none;
+      background: linear-gradient(90deg, var(--brand), var(--accent));
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 11px 22px rgba(51, 160, 255, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(90deg, var(--brand-dark), #1fbeef);
+    }
+
+    .status {
+      min-height: 20px;
+      margin-top: 9px;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .status.error {
+      color: var(--error);
+    }
+
+    .fine {
+      margin-top: 12px;
+      color: #92a2cd;
+      font-size: 0.78rem;
+    }
+
+    @media (min-width: 860px) {
+      .wrap {
+        grid-template-columns: 1.15fr 0.85fr;
+      }
+
+      .hero,
+      .card {
+        min-height: 100%;
+      }
+    }
+
+    @media (max-width: 680px) {
+      body {
+        padding: 14px 10px 22px;
+      }
+
+      .hero {
+        border-radius: 20px;
+        padding: 14px;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 16px 14px;
+        border-radius: 18px;
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+
+      h2 {
+        font-size: 1.35rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-badge">Canada-wide lenders</div>
+      <h1>Get Matched To Your <span>Best Loan Offer</span> In Minutes</h1>
+      <p>Answer a few quick questions and instantly check options from trusted lending partners. No long forms, no waiting on phone calls.</p>
+
+      <div class="trust-row">
+        <span class="trust-chip">Soft quote style flow</span>
+        <span class="trust-chip">Mobile optimized</span>
+        <span class="trust-chip">Encrypted connection</span>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat"><b>60 sec</b><span>average completion</span></div>
+        <div class="stat"><b>Fast</b><span>real-time response</span></div>
+        <div class="stat"><b>24/7</b><span>apply anytime</span></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="top-pill">Secure pre-qualification</div>
+      <h2>Check Your Loan Options</h2>
+      <p class="sub">One short question at a time. Tap next to continue.</p>
+
+      <form id="loanForm" novalidate>
+        <div id="progress" class="progress"></div>
+        <div class="bar" aria-hidden="true"><span id="progressFill"></span></div>
+        <p id="question" class="q"></p>
+        <div id="inputArea"></div>
+
+        <div class="actions">
+          <button id="backBtn" type="button" class="btn-secondary">Back</button>
+          <button id="nextBtn" type="button" class="btn-primary">Continue</button>
+        </div>
+        <button id="submitBtn" type="submit" class="btn-primary" hidden>Unlock My Offers</button>
+      </form>
+
+      <div class="fine">
+        By continuing, you agree to be contacted about loan-related services and confirm you are 18+.
+      </div>
+      <div id="status" class="status"></div>
+    </section>
+  </main>
+
+  <script>
+    const API_URL = "/api/leadscout/submit";
+
+    const form = document.getElementById("loanForm");
+    const progressEl = document.getElementById("progress");
+    const questionEl = document.getElementById("question");
+    const inputArea = document.getElementById("inputArea");
+    const backBtn = document.getElementById("backBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const submitBtn = document.getElementById("submitBtn");
+    const statusEl = document.getElementById("status");
+    const progressFill = document.getElementById("progressFill");
+
+    let currentStep = 0;
+    let isSubmitting = false;
+
+    const steps = [
+      { id: "firstName", q: "What is your first name?", type: "text", placeholder: "First name" },
+      { id: "lastName", q: "What is your last name?", type: "text", placeholder: "Last name" },
+      { id: "email", q: "What is your email?", type: "email", placeholder: "you@email.com" },
+      { id: "phone", q: "What is your phone number?", type: "tel", placeholder: "(555) 555-5555" },
+      { id: "requestedAmount", q: "How much do you want to request?", type: "number", min: 100, max: 35000, defaultValue: "2500" },
+      {
+        id: "purpose",
+        q: "What is the loan for?",
+        type: "select",
+        options: [
+          { value: "Home Improvement", label: "Home Improvement" },
+          { value: "Debt Consolidation", label: "Debt Consolidation" },
+          { value: "Emergency", label: "Emergency" },
+          { value: "Other", label: "Other" }
+        ],
+        defaultValue: "Home Improvement"
+      },
+      {
+        id: "creditScore",
+        q: "How is your credit?",
+        type: "choice",
+        options: [
+          { value: "poor", label: "Poor" },
+          { value: "fair", label: "Fair" },
+          { value: "good", label: "Good" },
+          { value: "excellent", label: "Excellent" }
+        ],
+        defaultValue: "good"
+      },
+      {
+        id: "incomeType",
+        q: "What is your income type?",
+        type: "select",
+        options: [
+          { value: "full_time", label: "Full-time" },
+          { value: "part_time", label: "Part-time" },
+          { value: "self_employed", label: "Self-employed" },
+          { value: "benefits", label: "Benefits" }
+        ],
+        defaultValue: "full_time"
+      },
+      {
+        id: "directDeposit",
+        q: "Do you receive direct deposit?",
+        type: "choice",
+        options: [
+          { value: "yes", label: "Yes" },
+          { value: "no", label: "No" }
+        ],
+        defaultValue: "yes"
+      },
+      { id: "monthlyIncome", q: "Estimated monthly income (CAD)?", type: "number", min: 500, max: 50000, defaultValue: "1500" },
+      {
+        id: "payFrequency",
+        q: "How often are you paid?",
+        type: "choice",
+        options: [
+          { value: "WEEKLY", label: "Weekly" },
+          { value: "BIWEEKLY", label: "Biweekly" },
+          { value: "SEMIMONTHLY", label: "Semi-monthly" },
+          { value: "MONTHLY", label: "Monthly" }
+        ],
+        defaultValue: "BIWEEKLY"
+      },
+      {
+        id: "province",
+        q: "Which province/territory do you live in?",
+        type: "select",
+        options: [
+          { value: "ON", label: "ON" }, { value: "QC", label: "QC" }, { value: "BC", label: "BC" },
+          { value: "AB", label: "AB" }, { value: "MB", label: "MB" }, { value: "NB", label: "NB" },
+          { value: "NL", label: "NL" }, { value: "NS", label: "NS" }, { value: "PE", label: "PE" },
+          { value: "SK", label: "SK" }, { value: "NT", label: "NT" }, { value: "NU", label: "NU" }, { value: "YT", label: "YT" }
+        ],
+        defaultValue: "QC"
+      },
+      {
+        id: "language",
+        q: "Preferred language?",
+        type: "choice",
+        options: [
+          { value: "en", label: "English" },
+          { value: "fr", label: "French" }
+        ],
+        defaultValue: "en"
+      }
+    ];
+
+    const state = Object.fromEntries(steps.map((s) => [s.id, s.defaultValue || ""]));
+
+    function setStatus(text, isError = false) {
+      statusEl.textContent = text;
+      statusEl.className = isError ? "status error" : "status";
+    }
+
+    function formatPhone(value) {
+      const digits = value.replace(/\D/g, "").slice(0, 10);
+      if (digits.length <= 3) return digits;
+      if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+      return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+    }
+
+    function isValidPhone(value) {
+      return /^\(\d{3}\)\s\d{3}-\d{4}$/.test(value);
+    }
+
+    function canRedirect(res) {
+      const status = (res.status || "").trim();
+      const url = (res.redirectUrl || "").trim();
+      return url && status !== "" && status !== "EXISTS" && status !== "ERROR";
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function renderStep() {
+      const step = steps[currentStep];
+      progressEl.textContent = `Question ${currentStep + 1} of ${steps.length}`;
+      progressFill.style.width = `${((currentStep + 1) / steps.length) * 100}%`;
+      questionEl.textContent = step.q;
+
+      if (step.type === "choice") {
+        inputArea.innerHTML = `
+          <div class="choices">
+            ${step.options.map((opt) => `
+              <button
+                type="button"
+                class="choice-btn ${state[step.id] === opt.value ? "is-selected" : ""}"
+                data-choice="${escapeHtml(opt.value)}"
+              >${escapeHtml(opt.label)}</button>
+            `).join("")}
+          </div>
+        `;
+        const buttons = inputArea.querySelectorAll("[data-choice]");
+        for (const button of buttons) {
+          button.addEventListener("click", () => {
+            state[step.id] = button.dataset.choice || "";
+            if (currentStep < steps.length - 1) {
+              currentStep += 1;
+              renderStep();
+            } else {
+              submitBtn.click();
+            }
+          });
+        }
+      } else if (step.type === "select") {
+        inputArea.innerHTML = `
+          <select id="activeInput" required>
+            ${step.options.map((opt) => `<option value="${escapeHtml(opt.value)}">${escapeHtml(opt.label)}</option>`).join("")}
+          </select>
+        `;
+        const input = document.getElementById("activeInput");
+        input.value = state[step.id] || step.defaultValue || "";
+        input.focus();
+      } else {
+        const minAttr = step.min ? `min="${step.min}"` : "";
+        const maxAttr = step.max ? `max="${step.max}"` : "";
+        const inputMode = step.type === "number" ? "numeric" : "text";
+        inputArea.innerHTML = `
+          <input id="activeInput" type="${step.type}" placeholder="${step.placeholder || ""}" ${minAttr} ${maxAttr} inputmode="${inputMode}" required />
+        `;
+        const input = document.getElementById("activeInput");
+        input.value = state[step.id] || step.defaultValue || "";
+        input.focus();
+      }
+
+      backBtn.disabled = currentStep === 0 || isSubmitting;
+      nextBtn.hidden = step.type === "choice" || currentStep === steps.length - 1;
+      nextBtn.disabled = isSubmitting;
+      submitBtn.hidden = currentStep !== steps.length - 1;
+      submitBtn.disabled = isSubmitting;
+    }
+
+    function validateCurrentStep() {
+      const step = steps[currentStep];
+      if (step.type === "choice") {
+        if (!state[step.id]) {
+          setStatus("Please choose one option.", true);
+          return false;
+        }
+        setStatus("");
+        return true;
+      }
+
+      const input = document.getElementById("activeInput");
+      const value = input.value.trim();
+      if (!value) {
+        setStatus("Please complete this question.", true);
+        return false;
+      }
+
+      if (step.id === "email") {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          setStatus("Please enter a valid email.", true);
+          return false;
+        }
+        state.email = value;
+      } else if (step.id === "phone") {
+        const formatted = formatPhone(value);
+        if (!isValidPhone(formatted)) {
+          input.value = formatted;
+          setStatus("Phone must be in format (XXX) XXX-XXXX", true);
+          return false;
+        }
+        state.phone = formatted;
+      } else if (step.type === "number") {
+        const n = Number.parseInt(value, 10);
+        if (Number.isNaN(n)) {
+          setStatus("Please enter a valid number.", true);
+          return false;
+        }
+        if (step.min && n < step.min) {
+          setStatus(`Value must be at least ${step.min}.`, true);
+          return false;
+        }
+        if (step.max && n > step.max) {
+          setStatus(`Value must be at most ${step.max}.`, true);
+          return false;
+        }
+        state[step.id] = String(n);
+      } else {
+        state[step.id] = value;
+      }
+
+      setStatus("");
+      return true;
+    }
+
+    function buildPayload() {
+      return {
+        type: "PERSONAL",
+        language: state.language,
+        ipAddress: "1.1.1.222",
+        userAgent: navigator.userAgent,
+        test: true,
+        data: {
+          requestedAmount: Number.parseInt(state.requestedAmount, 10),
+          purpose: state.purpose,
+          creditScore: state.creditScore,
+          incomeType: state.incomeType,
+          directDeposit: state.directDeposit,
+          email: state.email,
+          firstName: state.firstName,
+          lastName: state.lastName,
+          phone: state.phone,
+          birthDate: "1976-01-01",
+          address: "866 rue Elgar",
+          postalCode: "H3E-1C2",
+          city: "Montreal",
+          province: state.province,
+          country: "CA",
+          timeAtAddress: 12,
+          ownHome: "no",
+          rentMortgagePayment: 1200,
+          financialSituation: "none",
+          monthlyIncome: Number.parseInt(state.monthlyIncome, 10),
+          jobTitle: "Software Engineer",
+          employerName: "Google",
+          employedMonths: 12,
+          payFrequency: state.payFrequency,
+          payDate1: "2024-06-12",
+          unsecuredDebtAmount: 0,
+          optIn: true,
+          optInPhone: true
+        },
+        extra: {
+          aff_utm_source: "SimpleLander"
+        }
+      };
+    }
+
+    async function submitLeadInBackground(payload) {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const text = await response.text();
+      let json = {};
+      try {
+        json = JSON.parse(text);
+      } catch {
+        throw new Error("API did not return JSON.");
+      }
+
+      if (!response.ok) {
+        throw new Error(json.message || `HTTP ${response.status}`);
+      }
+      return json;
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (!validateCurrentStep()) return;
+      if (currentStep < steps.length - 1) {
+        currentStep += 1;
+        renderStep();
+      }
+    });
+
+    backBtn.addEventListener("click", () => {
+      if (currentStep > 0) {
+        currentStep -= 1;
+        setStatus("");
+        renderStep();
+      }
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!validateCurrentStep()) return;
+      if (currentStep < steps.length - 1) {
+        currentStep += 1;
+        renderStep();
+        return;
+      }
+
+      isSubmitting = true;
+      renderStep();
+      setStatus("Checking offers...");
+
+      try {
+        const payload = buildPayload();
+        const result = await submitLeadInBackground(payload);
+        if (canRedirect(result)) {
+          setStatus("Redirecting to your best offer...");
+          window.location.assign(result.redirectUrl);
+          return;
+        }
+        const status = (result.status || "").trim() || "(empty)";
+        const message = result.message || "No redirect from API.";
+        setStatus(`No redirect. Status: ${status}. ${message}`, true);
+      } catch (error) {
+        setStatus(error.message || "Something went wrong.", true);
+      } finally {
+        isSubmitting = false;
+        renderStep();
+      }
+    });
+
+    renderStep();
+  </script>
+</body>
+</html>
