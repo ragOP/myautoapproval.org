@@ -1,13 +1,16 @@
 import { AnimatePresence, motion as Motion } from "framer-motion";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Chatbotdq from "./Chatbotdq";
+import Home from "./pages/Home";
 import LandingPage from "./pages/LandingPage";
+import Quiz from "./pages/Quiz";
 import QuizPage from "./pages/QuizPage";
+import Result from "./pages/Result";
 
 const pageTransition = {
-  initial: { opacity: 0, scale: 0.985 },
-  animate: { opacity: 1, scale: 1, transition: { duration: 0.28, ease: "easeOut" } },
-  exit: { opacity: 0, scale: 0.985, transition: { duration: 0.2, ease: "easeIn" } },
+  initial: { opacity: 0, scale: 0.985, filter: "blur(8px)" },
+  animate: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 0.45, ease: "easeOut" } },
+  exit: { opacity: 0, scale: 1.02, filter: "blur(6px)", transition: { duration: 0.28, ease: "easeIn" } },
 };
 
 function AnimatedRoutes() {
@@ -21,6 +24,11 @@ function AnimatedRoutes() {
           <Route path="/engsf2200" element={<LandingPage />} />
           <Route path="/quiz" element={<QuizPage />} />
           <Route path="/wed" element={<Chatbotdq />} />
+
+          <Route path="/ai" element={<Home />} />
+          <Route path="/ai/quiz" element={<Quiz />} />
+          <Route path="/ai/result" element={<Result />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Motion.div>
     </AnimatePresence>
@@ -31,18 +39,6 @@ const App = () => {
   return (
     <Router>
       <AnimatedRoutes />
-      {/*
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/quiz" element={<QuizPage />} />
-        <Route path="/wed" element={<Chatbotdq />} />
-        <Route path="/engsfdq" element={<Chatbotdq2 />} />
-        <Route path="/engsf2200" element={<ChatbotTwo />} />
-        <Route path="/engsf1dup" element={<Chatbotdq2 />} />
-        <Route path="/engsf2200dup" element={<ChatbotFour />} />
-        <Route path="/engsafe1" element={<Chatbot2 />} />
-      </Routes>
-      */}
     </Router>
   );
 };
