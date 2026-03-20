@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loan Lander</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=DM+Serif+Display:ital@0;1&display=swap");
+
+      :root {
+        --bg: #161514;
+        --paper: #f6f0e5;
+        --panel: #fffdf7;
+        --ink: #1f1b16;
+        --muted: #635e56;
+        --line: #d7cab2;
+        --accent: #b1432f;
+        --accent-2: #e18453;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 80% 16%, rgba(225, 132, 83, 0.22), transparent 34%),
+          radial-gradient(circle at 14% 86%, rgba(177, 67, 47, 0.22), transparent 32%),
+          var(--bg);
+      }
+
+      .page {
+        width: 100%;
+        max-width: 520px;
+        margin: 0 auto;
+        min-height: 100vh;
+        background: var(--paper);
+        border-left: 1px solid #2e2a24;
+        border-right: 1px solid #2e2a24;
+        box-shadow: 0 28px 64px rgba(0, 0, 0, 0.45);
+      }
+
+      .top {
+        text-align: left;
+        padding: 18px 16px 14px;
+        border-bottom: 2px solid var(--ink);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0)),
+          var(--paper);
+      }
+
+      .logo {
+        font-size: 26px;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -0.4px;
+        color: var(--ink);
+        text-transform: lowercase;
+      }
+
+      .logo small {
+        display: block;
+        margin-top: 5px;
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--muted);
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+      }
+
+      .logo-info {
+        margin-top: 12px;
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+      }
+
+      .logo-info span {
+        padding: 5px 9px;
+        border: 1px solid var(--ink);
+        border-radius: 4px;
+        background: #fff9ec;
+        color: var(--ink);
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .title {
+        margin: 16px 0 8px;
+        font-family: "DM Serif Display", Georgia, serif;
+        font-size: 42px;
+        font-weight: 400;
+        line-height: 1.05;
+        letter-spacing: -0.2px;
+        max-width: 11ch;
+      }
+
+      .sub {
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+        max-width: 34ch;
+      }
+
+      .card-wrap {
+        padding: 14px 14px 10px;
+      }
+
+      .frame {
+        border: 2px solid var(--ink);
+        border-radius: 0;
+        background: var(--panel);
+        box-shadow: 8px 8px 0 #221f1b;
+        padding: 14px 12px 12px;
+      }
+
+      .meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .step-pill {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--ink);
+        border-radius: 4px;
+        background: #fff;
+        color: var(--ink);
+        padding: 5px 9px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .step-note {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .progress {
+        width: 100%;
+        height: 7px;
+        overflow: hidden;
+        background: #d7cab2;
+        border: 1px solid var(--ink);
+      }
+
+      .progress span {
+        display: block;
+        height: 100%;
+        width: 33%;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        transition: width 0.24s ease;
+      }
+
+      .question-box {
+        margin-top: 14px;
+        border: 1px solid var(--ink);
+        border-radius: 0;
+        padding: 16px 13px 14px;
+        background: #fff;
+      }
+
+      .question {
+        margin: 0 0 12px;
+        font-family: "DM Serif Display", Georgia, serif;
+        font-size: 32px;
+        text-align: left;
+        line-height: 1.1;
+        letter-spacing: -0.2px;
+        color: var(--ink);
+        max-width: 14ch;
+      }
+
+      .options {
+        display: grid;
+        gap: 10px;
+      }
+
+      .opt {
+        min-height: 56px;
+        border: 1px solid var(--ink);
+        border-radius: 0;
+        padding: 14px 12px;
+        background: #fffdf7;
+        color: var(--ink);
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-align: left;
+        cursor: pointer;
+        box-shadow: 3px 3px 0 #2b2823;
+        transition: transform 0.12s ease, background 0.2s ease, color 0.2s ease;
+      }
+
+      .opt:hover {
+        background: var(--ink);
+        color: #fff;
+      }
+
+      .opt:active {
+        transform: translate(1px, 1px);
+      }
+
+      .flow-actions {
+        margin-top: 10px;
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .back-btn {
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: underline;
+        cursor: pointer;
+        padding: 4px 2px;
+      }
+
+      .back-btn:disabled {
+        opacity: 0.45;
+        cursor: default;
+      }
+
+      .status {
+        margin-top: 10px;
+        text-align: left;
+        color: var(--accent);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .trust-row {
+        margin-top: 12px;
+        padding: 10px 11px;
+        border: 1px solid var(--ink);
+        background: #fbf4e8;
+        color: var(--ink);
+        font-size: 12px;
+        font-weight: 700;
+        display: grid;
+        gap: 5px;
+      }
+
+      .trust-row span::before {
+        content: "-> ";
+        color: var(--accent);
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .final-box {
+        border: 2px solid var(--ink);
+        border-radius: 0;
+        padding: 22px 15px 16px;
+        box-shadow: 8px 8px 0 #221f1b;
+        text-align: left;
+        position: relative;
+        overflow: hidden;
+        background: var(--panel);
+      }
+
+      .final-box::before {
+        content: "";
+        position: absolute;
+        right: -40px;
+        top: -40px;
+        width: 150px;
+        height: 150px;
+        border: 2px solid var(--ink);
+        transform: rotate(14deg);
+        background: rgba(225, 132, 83, 0.2);
+      }
+
+      .final-box > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .final-kicker {
+        display: inline-block;
+        border: 1px solid var(--ink);
+        border-radius: 4px;
+        padding: 6px 9px;
+        background: #fff9ec;
+        color: var(--ink);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+
+      .final-box h3 {
+        margin: 0 0 8px;
+        font-family: "DM Serif Display", Georgia, serif;
+        font-size: 42px;
+        line-height: 1.02;
+        letter-spacing: -0.2px;
+        max-width: 10ch;
+      }
+
+      .final-box p {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 15px;
+        max-width: 32ch;
+      }
+
+      .cta {
+        width: 100%;
+        min-height: 56px;
+        border: 2px solid var(--ink);
+        border-radius: 0;
+        padding: 14px 16px;
+        background: var(--accent);
+        color: #fff8ef;
+        font-size: 17px;
+        font-weight: 800;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: 4px 4px 0 #2a2621;
+        transition: transform 0.12s ease, filter 0.2s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.08) 0 8px,
+          rgba(255, 255, 255, 0) 8px 16px
+        );
+      }
+
+      .cta:hover {
+        filter: brightness(1.08);
+      }
+
+      .cta:active {
+        transform: translate(1px, 1px);
+      }
+
+      .timer {
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--muted);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+      }
+
+      .timer strong {
+        color: var(--accent);
+      }
+
+      .graffiti {
+        margin-top: 10px;
+        display: inline-block;
+        padding: 6px 9px;
+        border-radius: 0;
+        border: 1px dashed var(--ink);
+        background: #fff9ec;
+        color: var(--ink);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.6px;
+        transform: rotate(-1deg);
+      }
+
+      .footer {
+        margin-top: 4px;
+        padding: 17px 14px 22px;
+        text-align: left;
+        border-top: 2px solid var(--ink);
+        background: #efe6d6;
+        color: var(--ink);
+      }
+
+      .footer strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 14px;
+      }
+
+      .footer small {
+        font-size: 12px;
+        line-height: 1.45;
+        color: var(--muted);
+      }
+
+      @media (max-width: 420px) {
+        .top {
+          padding: 14px 12px 12px;
+        }
+
+        .title {
+          font-size: 34px;
+        }
+
+        .question {
+          font-size: 28px;
+        }
+
+        .opt {
+          font-size: 15px;
+        }
+      }
+
+      @media (min-width: 700px) {
+        .page {
+          margin: 20px auto;
+          min-height: calc(100vh - 40px);
+          border-radius: 14px;
+          overflow: hidden;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="top">
+        <div class="logo">myautoapproval.org<small>direct lender marketplace</small></div>
+        <div class="logo-info">
+          <span>APR from 8.99%</span>
+          <span>No hard credit pull</span>
+          <span>60-second form</span>
+        </div>
+        <div class="title">Get Matched With Loan Options In Minutes</div>
+        <p class="sub">See your matching lender options without impacting your credit score.</p>
+      </div>
+
+      <div class="card-wrap" id="flow">
+        <div class="frame">
+          <div class="meta">
+            <div class="step-pill" id="step">Step 1 of 3</div>
+            <div class="step-note" id="percent">33% done</div>
+          </div>
+          <div class="progress"><span id="fill"></span></div>
+
+          <div class="question-box">
+            <h2 class="question" id="question"></h2>
+            <div class="options" id="options"></div>
+            <div class="status hidden" id="status">Finding your best path...</div>
+          </div>
+
+          <div class="flow-actions">
+            <button id="backBtn" class="back-btn" disabled>Go back</button>
+          </div>
+
+          <div class="trust-row">
+            <span>Encrypted and secure experience</span>
+            <span>No obligation to accept any offer</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-wrap hidden" id="result">
+        <div class="final-box">
+          <div class="final-kicker">Pre-qualification update</div>
+          <h3>You may qualify today</h3>
+          <p>Great news. Based on your answers, lender matches may be available now.</p>
+          <button class="cta">Continue To Offers</button>
+          <div class="timer">Priority window ends in <strong id="timer">01:59</strong></div>
+          <div class="graffiti">MATCH SIGNAL: HIGH</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <strong>myautoapproval.org</strong>
+        <small>This is a secure matching service, not a direct lender. Offer availability varies by state and applicant profile.</small>
+      </div>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          q: "How much would you like to borrow?",
+          opts: ["$1,000 or less", "$1,001 to $5,000", "$5,001 to $10,000", "More than $10,000"],
+        },
+        {
+          q: "What is your employment status?",
+          opts: ["Employed", "Self-employed", "Unemployed", "Retired"],
+        },
+        {
+          q: "How would you describe your credit?",
+          opts: ["Excellent", "Good", "Fair", "Building credit"],
+        },
+      ];
+
+      let idx = 0;
+      const answers = [];
+      const questionEl = document.getElementById("question");
+      const optionsEl = document.getElementById("options");
+      const stepEl = document.getElementById("step");
+      const percentEl = document.getElementById("percent");
+      const fillEl = document.getElementById("fill");
+      const flowEl = document.getElementById("flow");
+      const resultEl = document.getElementById("result");
+      const statusEl = document.getElementById("status");
+      const backBtn = document.getElementById("backBtn");
+      const timerEl = document.getElementById("timer");
+      let timerHandle = null;
+      let timeLeft = 119;
+      let isProcessing = false;
+
+      function startTimer() {
+        if (!timerEl) return;
+        if (timerHandle) clearInterval(timerHandle);
+        timerEl.textContent = "01:59";
+        timeLeft = 119;
+
+        timerHandle = setInterval(() => {
+          timeLeft -= 1;
+          if (timeLeft < 0) {
+            clearInterval(timerHandle);
+            timerEl.textContent = "00:00";
+            return;
+          }
+          const m = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+          const s = String(timeLeft % 60).padStart(2, "0");
+          timerEl.textContent = `${m}:${s}`;
+        }, 1000);
+      }
+
+      function updateProgress() {
+        const progress = ((idx + 1) / questions.length) * 100;
+        stepEl.textContent = `Step ${idx + 1} of ${questions.length}`;
+        percentEl.textContent = `${Math.round(progress)}% complete`;
+        fillEl.style.width = `${progress}%`;
+        backBtn.disabled = idx === 0 || isProcessing;
+      }
+
+      function renderQuestion() {
+        const current = questions[idx];
+        questionEl.textContent = current.q;
+        updateProgress();
+
+        optionsEl.innerHTML = current.opts
+          .map((opt) => `<button class="opt" onclick="pick('${opt.replace(/'/g, "\\'")}')">${opt}</button>`)
+          .join("");
+      }
+
+      async function pick(value) {
+        if (isProcessing) return;
+        isProcessing = true;
+        backBtn.disabled = true;
+
+        answers[idx] = value;
+        statusEl.classList.remove("hidden");
+        statusEl.textContent = "Checking lender criteria...";
+
+        await new Promise((r) => setTimeout(r, 520));
+        statusEl.classList.add("hidden");
+
+        idx += 1;
+        if (idx < questions.length) {
+          isProcessing = false;
+          renderQuestion();
+          return;
+        }
+
+        flowEl.classList.add("hidden");
+        resultEl.classList.remove("hidden");
+        startTimer();
+      }
+
+      function back() {
+        if (isProcessing || idx === 0) return;
+        idx -= 1;
+        renderQuestion();
+      }
+
+      backBtn.addEventListener("click", back);
+      window.pick = pick;
+      renderQuestion();
+    </script>
+  </body>
+</html>

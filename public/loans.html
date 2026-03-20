@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loan Lander</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        background: #4a2f2f;
+      }
+      .page {
+        max-width: 500px;
+        margin: 0 auto;
+        background: #fff;
+        min-height: 100vh;
+        border: 1px solid #dfe3ea;
+      }
+      .top {
+        text-align: center;
+        padding: 12px 12px 10px;
+        border-bottom: 1px solid #eaedf3;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      }
+      .logo {
+        font-size: 26px;
+        font-weight: 800;
+        line-height: 1;
+        color: #1d4ed8;
+        letter-spacing: -0.4px;
+      }
+      .logo small {
+        display: block;
+        font-size: 12px;
+        letter-spacing: 1.4px;
+        color: #334155;
+        margin-top: 3px;
+        text-transform: uppercase;
+      }
+      .logo-info {
+        margin-top: 8px;
+        display: inline-flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .logo-info span {
+        font-size: 11px;
+        font-weight: 700;
+        color: #1d4ed8;
+        border: 1px solid #bfdbfe;
+        background: #eff6ff;
+        border-radius: 999px;
+        padding: 4px 8px;
+      }
+      .title {
+        margin: 10px 0 6px;
+        font-size: 26px;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .sub {
+        margin: 0;
+        color: #59677d;
+        font-size: 15px;
+      }
+      .card-wrap {
+        padding: 12px;
+      }
+      .progress {
+        width: 100%;
+        height: 6px;
+        background: #e7edf7;
+        border-radius: 999px;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+      .progress span {
+        display: block;
+        height: 100%;
+        width: 33%;
+        background: #2f74d0;
+        transition: width 0.2s ease;
+      }
+      .step {
+        color: #4f5f77;
+        font-size: 12px;
+        margin-bottom: 8px;
+        text-align: right;
+      }
+      .question-box {
+        border: 1px solid #dde3ee;
+        border-radius: 10px;
+        padding: 16px 12px 14px;
+        box-shadow: 0 3px 9px rgba(14, 25, 42, 0.08);
+      }
+      .question {
+        font-size: 22px;
+        text-align: center;
+        margin: 2px 0 12px;
+        color: #1b2738;
+        line-height: 1.25;
+      }
+      .options {
+        display: grid;
+        gap: 10px;
+      }
+      .opt {
+        border: 1px solid #2f74d0;
+        border-radius: 12px;
+        background: #fff;
+        color: #2f74d0;
+        font-size: 17px;
+        font-weight: 600;
+        padding: 14px 12px;
+        cursor: pointer;
+        min-height: 56px;
+        letter-spacing: 0.1px;
+        box-shadow: 0 1px 0 rgba(47, 116, 208, 0.2);
+        transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+      }
+      .opt:hover {
+        background: #eaf2ff;
+        border-color: #1d4ed8;
+      }
+      .opt:active {
+        transform: scale(0.99);
+      }
+      .status {
+        margin-top: 8px;
+        text-align: center;
+        color: #2f74d0;
+        font-size: 13px;
+      }
+      .hidden {
+        display: none !important;
+      }
+      .footer {
+        padding: 16px 14px 20px;
+        text-align: center;
+        color: #475569;
+        font-size: 14px;
+        font-weight: 600;
+        border-top: 1px solid #eef2f7;
+        background: #fbfcfe;
+      }
+      .final-box {
+        border: 1px solid #dde3ee;
+        border-radius: 8px;
+        padding: 20px 14px;
+        box-shadow: 0 3px 9px rgba(14, 25, 42, 0.08);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      }
+      .final-box::before {
+        content: "";
+        position: absolute;
+        inset: -20% -20% auto;
+        height: 180px;
+        background: radial-gradient(circle at 20% 40%, rgba(59, 130, 246, 0.16), transparent 45%),
+          radial-gradient(circle at 70% 20%, rgba(147, 197, 253, 0.2), transparent 48%),
+          radial-gradient(circle at 50% 90%, rgba(29, 78, 216, 0.12), transparent 42%);
+        pointer-events: none;
+      }
+      .final-box > * {
+        position: relative;
+        z-index: 1;
+      }
+      .final-box h3 {
+        margin: 0 0 8px;
+        font-size: 28px;
+      }
+      .final-box p {
+        margin: 0 0 14px;
+        color: #59677d;
+      }
+      .cta {
+        border: 1px solid #1d4ed8;
+        background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+        color: #fff;
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+        border-radius: 10px;
+        padding: 13px 16px;
+        cursor: pointer;
+        min-height: 52px;
+        width: 100%;
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.24);
+        transition: transform 0.12s ease, filter 0.18s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .cta::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -60%;
+        width: 40%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+        transform: skewX(-18deg);
+        animation: shimmer 2.1s linear infinite;
+      }
+      @keyframes shimmer {
+        to {
+          left: 140%;
+        }
+      }
+      .cta:hover {
+        filter: brightness(1.04);
+      }
+      .cta:active {
+        transform: scale(0.99);
+      }
+      .timer {
+        margin-top: 8px;
+        font-size: 12px;
+        color: #475569;
+        text-align: center;
+        font-weight: 600;
+      }
+      .graffiti {
+        margin-top: 10px;
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.6px;
+        color: #1d4ed8;
+        transform: rotate(-3deg);
+        background: #dbeafe;
+        border: 1px dashed #60a5fa;
+        border-radius: 8px;
+        padding: 6px 10px;
+      }
+      @media (max-width: 420px) {
+        .top {
+          padding: 12px 10px 9px;
+        }
+        .title {
+          font-size: 23px;
+        }
+        .question {
+          font-size: 20px;
+        }
+        .opt {
+          font-size: 16px;
+          min-height: 52px;
+        }
+        .sub {
+          font-size: 14px;
+        }
+        .footer {
+          font-size: 13px;
+        }
+      }
+      @media (min-width: 700px) {
+        .page {
+          margin: 16px auto;
+          min-height: calc(100vh - 32px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="top">
+        <div class="logo">myautoapproval.org<small>FAST LOAN MATCHING</small></div>
+        <div class="logo-info">
+          <span>APR from 8.99%</span>
+          <span>No credit impact</span>
+          <span>1-min check</span>
+        </div>
+        <div class="title">Online Personal Loans from 8.99%</div>
+        <p class="sub">You Can Apply With No Impact To Your Credit Score</p>
+      </div>
+
+      <div class="card-wrap" id="flow">
+        <div class="progress"><span id="fill"></span></div>
+        <div class="step" id="step">Step 1 of 3</div>
+        <div class="question-box">
+          <h2 class="question" id="question"></h2>
+          <div class="options" id="options"></div>
+          <div class="status hidden" id="status">Checking options...</div>
+        </div>
+      </div>
+
+      <div class="card-wrap hidden" id="result">
+        <div class="final-box">
+          <h3>You may qualify 🎉</h3>
+          <p>Based on your answers, we found matching lender options.</p>
+          <button class="cta">Continue</button>
+          <div class="timer">Priority window ends in <span id="timer">01:59</span></div>
+          <div class="graffiti">PRE-QUALIFIED SIGNAL</div>
+        </div>
+      </div>
+
+      <div class="footer">myautoapproval.org - Secure loan matching platform</div>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          q: "How Much Would You Like To Borrow?",
+          opts: ["$1,000 or less", "$1,001 to $5,000", "$5,001 to $10,000", "More than $10,000"],
+        },
+        {
+          q: "What Is Your Employment Status?",
+          opts: ["Employed", "Self-employed", "Unemployed", "Retired"],
+        },
+        {
+          q: "What Is Your Credit Type?",
+          opts: ["Excellent", "Good", "Fair", "Building credit"],
+        },
+      ];
+
+      let idx = 0;
+      const answers = [];
+      const questionEl = document.getElementById("question");
+      const optionsEl = document.getElementById("options");
+      const stepEl = document.getElementById("step");
+      const fillEl = document.getElementById("fill");
+      const flowEl = document.getElementById("flow");
+      const resultEl = document.getElementById("result");
+      const statusEl = document.getElementById("status");
+      const timerEl = document.getElementById("timer");
+      let timerHandle = null;
+      let timeLeft = 119;
+
+      function startTimer() {
+        if (!timerEl) return;
+        if (timerHandle) clearInterval(timerHandle);
+        timerEl.textContent = "01:59";
+        timeLeft = 119;
+        timerHandle = setInterval(() => {
+          timeLeft -= 1;
+          if (timeLeft < 0) {
+            clearInterval(timerHandle);
+            timerEl.textContent = "00:00";
+            return;
+          }
+          const m = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+          const s = String(timeLeft % 60).padStart(2, "0");
+          timerEl.textContent = `${m}:${s}`;
+        }, 1000);
+      }
+
+      function renderQuestion() {
+        const current = questions[idx];
+        questionEl.textContent = current.q;
+        stepEl.textContent = `Step ${idx + 1} of ${questions.length}`;
+        fillEl.style.width = `${((idx + 1) / questions.length) * 100}%`;
+
+        optionsEl.innerHTML = current.opts
+          .map((opt) => `<button class="opt" onclick="pick('${opt.replace(/'/g, "\\'")}')">${opt}</button>`)
+          .join("");
+      }
+
+      async function pick(value) {
+        answers.push(value);
+        statusEl.classList.remove("hidden");
+        statusEl.textContent = "Analyzing...";
+        await new Promise((r) => setTimeout(r, 600));
+        statusEl.classList.add("hidden");
+
+        idx += 1;
+        if (idx < questions.length) {
+          renderQuestion();
+          return;
+        }
+
+        flowEl.classList.add("hidden");
+        resultEl.classList.remove("hidden");
+        startTimer();
+      }
+
+      window.pick = pick;
+      renderQuestion();
+    </script>
+  </body>
+</html>
