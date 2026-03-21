@@ -302,23 +302,7 @@
     </div>
 
     <script>
-      const questions = [
-        {
-          q: "How Much Would You Like To Borrow?",
-          opts: ["$1,000 or less", "$1,001 to $5,000", "$5,001 to $10,000", "More than $10,000"],
-        },
-        {
-          q: "What Is Your Employment Status?",
-          opts: ["Employed", "Self-employed", "Unemployed", "Retired"],
-        },
-        {
-          q: "What Is Your Credit Type?",
-          opts: ["Excellent", "Good", "Fair", "Building credit"],
-        },
-      ];
-
-      let idx = 0;
-      const answers = [];
+      const API_URL = "/api/leadscout/submit";
       const questionEl = document.getElementById("question");
       const optionsEl = document.getElementById("options");
       const stepEl = document.getElementById("step");
@@ -327,8 +311,382 @@
       const resultEl = document.getElementById("result");
       const statusEl = document.getElementById("status");
       const timerEl = document.getElementById("timer");
+      const ctaBtn = resultEl.querySelector(".cta");
+
+      const steps = [
+        { id: "firstName", question: "What is your first name?", type: "text", placeholder: "First name" },
+        { id: "lastName", question: "What is your last name?", type: "text", placeholder: "Last name" },
+        { id: "email", question: "What email should we use to send your offers?", type: "email", placeholder: "you@email.com" },
+        { id: "phone", question: "What phone number can lenders reach you at?", type: "tel", placeholder: "(555) 555-5555" },
+        { id: "requestedAmount", question: "How much would you like to request?", type: "number", min: 100, max: 35000, defaultValue: "2500" },
+        {
+          id: "purpose",
+          question: "What is the main purpose of the loan?",
+          type: "select",
+          options: [
+            { value: "Home Improvement", label: "Home Improvement" },
+            { value: "Debt Consolidation", label: "Debt Consolidation" },
+            { value: "Emergency", label: "Emergency" },
+            { value: "Car Repair", label: "Car Repair" },
+            { value: "Medical", label: "Medical" },
+            { value: "Other", label: "Other" },
+          ],
+          defaultValue: "Home Improvement",
+        },
+        {
+          id: "creditScore",
+          question: "How would you describe your credit?",
+          type: "choice",
+          options: [
+            { value: "poor", label: "Poor" },
+            { value: "fair", label: "Fair" },
+            { value: "good", label: "Good" },
+            { value: "very_good", label: "Very good" },
+            { value: "excellent", label: "Excellent" },
+          ],
+          defaultValue: "good",
+        },
+        {
+          id: "incomeType",
+          question: "What is your income type?",
+          type: "select",
+          options: [
+            { value: "full_time", label: "Full-time employment" },
+            { value: "part_time", label: "Part-time employment" },
+            { value: "self_employed", label: "Self-employed" },
+            { value: "benefits", label: "Benefits" },
+            { value: "pension", label: "Pension" },
+          ],
+          defaultValue: "full_time",
+        },
+        {
+          id: "directDeposit",
+          question: "Do you receive direct deposit?",
+          type: "choice",
+          options: [
+            { value: "yes", label: "Yes" },
+            { value: "no", label: "No" },
+          ],
+          defaultValue: "yes",
+        },
+        { id: "monthlyIncome", question: "What is your estimated monthly income (CAD)?", type: "number", min: 500, max: 50000, defaultValue: "1500" },
+        {
+          id: "payFrequency",
+          question: "How often do you get paid?",
+          type: "choice",
+          options: [
+            { value: "WEEKLY", label: "Weekly" },
+            { value: "BIWEEKLY", label: "Biweekly" },
+            { value: "SEMIMONTHLY", label: "Semi-monthly" },
+            { value: "MONTHLY", label: "Monthly" },
+          ],
+          defaultValue: "BIWEEKLY",
+        },
+        {
+          id: "province",
+          question: "Which province or territory do you live in?",
+          type: "select",
+          options: [
+            { value: "ON", label: "ON" },
+            { value: "QC", label: "QC" },
+            { value: "BC", label: "BC" },
+            { value: "AB", label: "AB" },
+            { value: "MB", label: "MB" },
+            { value: "NB", label: "NB" },
+            { value: "NL", label: "NL" },
+            { value: "NS", label: "NS" },
+            { value: "PE", label: "PE" },
+            { value: "SK", label: "SK" },
+            { value: "NT", label: "NT" },
+            { value: "NU", label: "NU" },
+            { value: "YT", label: "YT" },
+          ],
+          defaultValue: "QC",
+        },
+        {
+          id: "language",
+          question: "Which language do you prefer?",
+          type: "choice",
+          options: [
+            { value: "en", label: "English" },
+            { value: "fr", label: "French" },
+          ],
+          defaultValue: "en",
+        },
+      ];
+
+      let currentStep = 0;
       let timerHandle = null;
       let timeLeft = 119;
+      let latestRedirect = "#";
+      let isSubmitting = false;
+
+      const formState = Object.fromEntries(steps.map((step) => [step.id, step.defaultValue || ""]));
+
+      function setStatus(text, isError = false) {
+        statusEl.classList.remove("hidden");
+        statusEl.textContent = text;
+        statusEl.style.color = isError ? "#b4232c" : "#2f74d0";
+      }
+
+      function clearStatus() {
+        statusEl.textContent = "";
+        statusEl.classList.add("hidden");
+      }
+
+      function canRedirect(res) {
+        const status = (res.status || "").trim();
+        const url = (res.redirectUrl || "").trim();
+        return url && status !== "" && status !== "EXISTS" && status !== "ERROR";
+      }
+
+      function formatPhone(value) {
+        const digits = value.replace(/\D/g, "").slice(0, 10);
+        if (digits.length <= 3) return digits;
+        if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+        return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+      }
+
+      function isValidPhone(value) {
+        return /^\(\d{3}\)\s\d{3}-\d{4}$/.test(value);
+      }
+
+      function escapeHtml(value) {
+        return value
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      }
+
+      function renderQuestion() {
+        const step = steps[currentStep];
+        questionEl.textContent = step.question;
+        stepEl.textContent = `Step ${currentStep + 1} of ${steps.length}`;
+        fillEl.style.width = `${((currentStep + 1) / steps.length) * 100}%`;
+
+        if (step.type === "choice") {
+          optionsEl.innerHTML = step.options
+            .map((option) => `<button class="opt" type="button" data-choice="${escapeHtml(option.value)}">${escapeHtml(option.label)}</button>`)
+            .join("");
+
+          const choiceButtons = optionsEl.querySelectorAll("[data-choice]");
+          for (const btn of choiceButtons) {
+            if (btn.dataset.choice === formState[step.id]) btn.style.background = "#eaf2ff";
+            btn.addEventListener("click", () => {
+              if (isSubmitting) return;
+              formState[step.id] = btn.dataset.choice || "";
+              clearStatus();
+              if (currentStep < steps.length - 1) {
+                currentStep += 1;
+                renderQuestion();
+              } else {
+                submitLead();
+              }
+            });
+          }
+          return;
+        }
+
+        const fieldHtml =
+          step.type === "select"
+            ? `<select id="activeInput" style="width:100%;border:1px solid #d7e2f2;border-radius:10px;padding:13px 12px;font-size:16px;">
+                ${step.options.map((option) => `<option value="${escapeHtml(option.value)}">${escapeHtml(option.label)}</option>`).join("")}
+              </select>`
+            : `<input
+                id="activeInput"
+                type="${step.type}"
+                placeholder="${step.placeholder || ""}"
+                ${step.min ? `min="${step.min}"` : ""}
+                ${step.max ? `max="${step.max}"` : ""}
+                style="width:100%;border:1px solid #d7e2f2;border-radius:10px;padding:13px 12px;font-size:16px;"
+              />`;
+
+        optionsEl.innerHTML = `
+          ${fieldHtml}
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
+            <button class="opt" id="backBtn" type="button" style="border-color:#c9d7ef;color:#335;">Back</button>
+            <button class="opt" id="nextBtn" type="button">Next</button>
+          </div>
+        `;
+
+        const input = document.getElementById("activeInput");
+        input.value = formState[step.id] || step.defaultValue || "";
+        input.focus();
+
+        const backBtn = document.getElementById("backBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        backBtn.disabled = currentStep === 0 || isSubmitting;
+        backBtn.style.opacity = backBtn.disabled ? "0.65" : "1";
+        nextBtn.disabled = isSubmitting;
+        nextBtn.textContent = currentStep === steps.length - 1 ? "Submit" : "Next";
+
+        backBtn.addEventListener("click", () => {
+          if (currentStep === 0 || isSubmitting) return;
+          currentStep -= 1;
+          clearStatus();
+          renderQuestion();
+        });
+
+        nextBtn.addEventListener("click", () => {
+          if (isSubmitting) return;
+          if (!validateCurrentStep()) return;
+          if (currentStep < steps.length - 1) {
+            currentStep += 1;
+            renderQuestion();
+          } else {
+            submitLead();
+          }
+        });
+      }
+
+      function validateCurrentStep() {
+        const step = steps[currentStep];
+        if (step.type === "choice") {
+          if (!formState[step.id]) {
+            setStatus("Please select an option to continue.", true);
+            return false;
+          }
+          return true;
+        }
+
+        const input = document.getElementById("activeInput");
+        const value = input.value.trim();
+        if (!value) {
+          setStatus("Please complete this question.", true);
+          return false;
+        }
+
+        if (step.id === "phone") {
+          const formatted = formatPhone(value);
+          if (!isValidPhone(formatted)) {
+            setStatus("Phone must be in format (XXX) XXX-XXXX", true);
+            input.value = formatted;
+            return false;
+          }
+          formState.phone = formatted;
+        } else if (step.id === "email") {
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+            setStatus("Please enter a valid email address.", true);
+            return false;
+          }
+          formState.email = value;
+        } else if (step.type === "number") {
+          const numeric = Number.parseInt(value, 10);
+          if (Number.isNaN(numeric)) {
+            setStatus("Please enter a valid number.", true);
+            return false;
+          }
+          if (step.min && numeric < step.min) {
+            setStatus(`Value must be at least ${step.min}.`, true);
+            return false;
+          }
+          if (step.max && numeric > step.max) {
+            setStatus(`Value must be at most ${step.max}.`, true);
+            return false;
+          }
+          formState[step.id] = String(numeric);
+        } else {
+          formState[step.id] = value;
+        }
+
+        clearStatus();
+        return true;
+      }
+
+      function buildPayload() {
+        return {
+          type: "PERSONAL",
+          language: formState.language,
+          ipAddress: "1.1.1.222",
+          userAgent: navigator.userAgent,
+          test: true,
+          data: {
+            requestedAmount: Number.parseInt(formState.requestedAmount, 10),
+            purpose: formState.purpose,
+            creditScore: formState.creditScore,
+            incomeType: formState.incomeType,
+            directDeposit: formState.directDeposit,
+            email: formState.email,
+            firstName: formState.firstName,
+            lastName: formState.lastName,
+            phone: formState.phone,
+            birthDate: "1976-01-01",
+            address: "866 rue Elgar",
+            postalCode: "H3E-1C2",
+            city: "Montreal",
+            province: formState.province,
+            country: "CA",
+            timeAtAddress: 12,
+            ownHome: "no",
+            rentMortgagePayment: 1200,
+            financialSituation: "none",
+            monthlyIncome: Number.parseInt(formState.monthlyIncome, 10),
+            jobTitle: "Software Engineer",
+            employerName: "Google",
+            employedMonths: 12,
+            payFrequency: formState.payFrequency,
+            payDate1: "2024-06-12",
+            unsecuredDebtAmount: 0,
+            optIn: true,
+            optInPhone: true,
+          },
+          extra: {
+            aff_utm_source: "SimpleLander",
+          },
+        };
+      }
+
+      async function submitLeadInBackground(payload) {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const text = await response.text();
+        let json = {};
+        try {
+          json = JSON.parse(text);
+        } catch {
+          throw new Error("API did not return JSON.");
+        }
+
+        if (!response.ok) {
+          throw new Error(json.message || `HTTP ${response.status}`);
+        }
+
+        return json;
+      }
+
+      async function submitLead() {
+        if (!validateCurrentStep()) return;
+        isSubmitting = true;
+        setStatus("Checking offers...");
+
+        try {
+          const payload = buildPayload();
+          const result = await submitLeadInBackground(payload);
+
+          if (canRedirect(result)) {
+            latestRedirect = result.redirectUrl;
+            setStatus("Redirecting to your best offer...");
+            window.location.assign(result.redirectUrl);
+            return;
+          }
+
+          const status = (result.status || "").trim() || "(empty)";
+          const message = result.message || "No redirect from API.";
+          setStatus(`No redirect. Status: ${status}. ${message}`, true);
+        } catch (error) {
+          setStatus(error.message || "Something went wrong.", true);
+        } finally {
+          isSubmitting = false;
+          flowEl.classList.add("hidden");
+          resultEl.classList.remove("hidden");
+          startTimer();
+        }
+      }
 
       function startTimer() {
         if (!timerEl) return;
@@ -348,36 +706,14 @@
         }, 1000);
       }
 
-      function renderQuestion() {
-        const current = questions[idx];
-        questionEl.textContent = current.q;
-        stepEl.textContent = `Step ${idx + 1} of ${questions.length}`;
-        fillEl.style.width = `${((idx + 1) / questions.length) * 100}%`;
-
-        optionsEl.innerHTML = current.opts
-          .map((opt) => `<button class="opt" onclick="pick('${opt.replace(/'/g, "\\'")}')">${opt}</button>`)
-          .join("");
-      }
-
-      async function pick(value) {
-        answers.push(value);
-        statusEl.classList.remove("hidden");
-        statusEl.textContent = "Analyzing...";
-        await new Promise((r) => setTimeout(r, 600));
-        statusEl.classList.add("hidden");
-
-        idx += 1;
-        if (idx < questions.length) {
-          renderQuestion();
+      ctaBtn.addEventListener("click", () => {
+        if (latestRedirect && latestRedirect !== "#") {
+          window.location.assign(latestRedirect);
           return;
         }
+        window.location.assign("#");
+      });
 
-        flowEl.classList.add("hidden");
-        resultEl.classList.remove("hidden");
-        startTimer();
-      }
-
-      window.pick = pick;
       renderQuestion();
     </script>
   </body>
