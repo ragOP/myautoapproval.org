@@ -5,12 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Loan Lander</title>
     <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
       body {
         margin: 0;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
         background: #4a2f2f;
       }
       .page {
+        width: 100%;
         max-width: 500px;
         margin: 0 auto;
         background: #fff;
@@ -105,6 +115,29 @@
       .options {
         display: grid;
         gap: 10px;
+      }
+      .field-input {
+        width: 100%;
+        max-width: 100%;
+        border: 1px solid #d7e2f2;
+        border-radius: 10px;
+        padding: 13px 12px;
+        font-size: 16px;
+        line-height: 1.35;
+        background: #fff;
+        color: #0f172a;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+      .field-input:focus {
+        outline: 2px solid #93c5fd;
+        outline-offset: 1px;
+      }
+      .action-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 10px;
       }
       .opt {
         border: 1px solid #2f74d0;
@@ -237,6 +270,10 @@
         padding: 6px 10px;
       }
       @media (max-width: 420px) {
+        .page {
+          border-left: 0;
+          border-right: 0;
+        }
         .top {
           padding: 12px 10px 9px;
         }
@@ -255,6 +292,9 @@
         }
         .footer {
           font-size: 13px;
+        }
+        .action-row {
+          grid-template-columns: 1fr;
         }
       }
       @media (min-width: 700px) {
@@ -421,7 +461,7 @@
       let latestRedirect = "#";
       let isSubmitting = false;
 
-      const formState = Object.fromEntries(steps.map((step) => [step.id, step.defaultValue || ""]));
+      const formState = Object.fromEntries(steps.map((step) => [step.id, ""]));
 
       function setStatus(text, isError = false) {
         statusEl.classList.remove("hidden");
@@ -490,7 +530,8 @@
 
         const fieldHtml =
           step.type === "select"
-            ? `<select id="activeInput" style="width:100%;border:1px solid #d7e2f2;border-radius:10px;padding:13px 12px;font-size:16px;">
+            ? `<select id="activeInput" class="field-input" aria-label="${escapeHtml(step.question)}">
+                <option value="" disabled selected>Select an option</option>
                 ${step.options.map((option) => `<option value="${escapeHtml(option.value)}">${escapeHtml(option.label)}</option>`).join("")}
               </select>`
             : `<input
@@ -499,19 +540,25 @@
                 placeholder="${step.placeholder || ""}"
                 ${step.min ? `min="${step.min}"` : ""}
                 ${step.max ? `max="${step.max}"` : ""}
-                style="width:100%;border:1px solid #d7e2f2;border-radius:10px;padding:13px 12px;font-size:16px;"
+                class="field-input"
+                autocomplete="off"
+                autocapitalize="off"
+                autocorrect="off"
+                spellcheck="false"
+                inputmode="${step.type === "number" ? "numeric" : step.type === "tel" ? "tel" : step.type === "email" ? "email" : "text"}"
+                aria-label="${escapeHtml(step.question)}"
               />`;
 
         optionsEl.innerHTML = `
           ${fieldHtml}
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
+          <div class="action-row">
             <button class="opt" id="backBtn" type="button" style="border-color:#c9d7ef;color:#335;">Back</button>
             <button class="opt" id="nextBtn" type="button">Next</button>
           </div>
         `;
 
         const input = document.getElementById("activeInput");
-        input.value = formState[step.id] || step.defaultValue || "";
+        input.value = formState[step.id] || "";
         input.focus();
 
         const backBtn = document.getElementById("backBtn");
