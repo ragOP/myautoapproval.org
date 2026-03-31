@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Véhicules disponibles près de chez vous — Programme canadien de liquidation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "vxjq6orjw8");
+  </script>
+<style>
+  :root {
+    --navy: #1A2B4A;
+    --blue-accent: #2563EB;
+    --blue-hover: #1D4ED8;
+    --white: #FFFFFF;
+    --off-white: #F8F9FB;
+    --border: #E2E6EC;
+    --text: #1A2B4A;
+    --text-muted: #6B7A8D;
+    --green: #16A34A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--off-white);
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── TOP BAR ── */
+  .top-bar {
+    background: var(--navy);
+    padding: 11px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .top-bar-dot {
+    width: 7px;
+    height: 7px;
+    background: #4ADE80;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: dotPulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes dotPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(74,222,128,0.5); }
+    50%       { box-shadow: 0 0 0 5px rgba(74,222,128,0); }
+  }
+
+  .top-bar-text {
+    color: rgba(255,255,255,0.8);
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    padding: 30px 20px 28px;
+    text-align: center;
+    border-bottom: 3px solid var(--blue-accent);
+  }
+
+  .hero-label {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  .hero h1 {
+    font-size: clamp(30px, 6vw, 34px);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: #60A5FA;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  /* ── CONTENT ── */
+  .container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0 18px;
+  }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blue-accent);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 18px;
+    margin: 20px 0 14px;
+  }
+
+  .explanation p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #374151;
+  }
+
+  .explanation p strong {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  /* ── CHECKS ── */
+  .checks {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 13px 15px;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: fadeUp 0.35s ease forwards;
+  }
+
+  .check-item:nth-child(1) { animation-delay: 0.05s; }
+  .check-item:nth-child(2) { animation-delay: 0.15s; }
+  .check-item:nth-child(3) { animation-delay: 0.25s; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .check-icon {
+    width: 20px;
+    height: 20px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .check-icon svg { width: 11px; height: 11px; }
+
+  .check-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .check-text span {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 20px;
+    margin-bottom: 18px;
+    text-align: center;
+  }
+
+  .cta-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  /* payment callout */
+  .payment-callout {
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 8px;
+    width: fit-content;
+    max-width: 100%;
+    padding: 6px 8px;
+    font-size: 14px;
+    color: #1E3A5F;
+    margin: 0 auto 16px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .payment-callout .payment-text {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .payment-callout strong {
+    color: var(--blue-accent);
+    font-size: 20px;
+    font-weight: 800;
+    display: block;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  /* ── CTA BUTTON ── */
+  .cta-btn-wrap {
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  /* soft glow ring that pulses behind the button */
+  .cta-btn-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 12px;
+    background: var(--blue-accent);
+    opacity: 0;
+    animation: glowPulse 2.2s ease-in-out 1s infinite;
+    z-index: 0;
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0;    transform: scale(1);    }
+    50%       { opacity: 0.18; transform: scale(1.015); }
+  }
+
+  .cta-btn {
+    display: block;
+    width: 100%;
+    background: var(--blue-accent);
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    padding: 20px 24px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    transition: background 0.15s, transform 0.12s, box-shadow 0.15s;
+    cursor: pointer;
+    border: none;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 16px rgba(37,99,235,0.35);
+  }
+
+  .cta-btn:hover {
+    background: var(--blue-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37,99,235,0.45);
+  }
+
+  .cta-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(37,99,235,0.3);
+  }
+
+  .cta-sub {
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.8;
+    display: block;
+    margin-top: 4px;
+  }
+
+  /* ── TRUST ROW ── */
+  .trust-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .trust-dot {
+    width: 5px;
+    height: 5px;
+    background: var(--green);
+    border-radius: 50%;
+  }
+
+  /* ── SOCIAL PROOF STRIP ── */
+  .social-proof {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 13px 16px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .proof-avatars {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .proof-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--white);
+    margin-left: -8px;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+
+  .proof-avatar:first-child { margin-left: 0; background: #3B82F6; }
+  .proof-avatar:nth-child(2) { background: #10B981; }
+  .proof-avatar:nth-child(3) { background: #F59E0B; }
+  .proof-avatar:nth-child(4) { background: #8B5CF6; }
+
+  .proof-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .proof-text strong {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    text-align: center;
+    font-size: 11px;
+    color: #9CA3AF;
+    line-height: 1.6;
+    padding: 14px 0 26px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--navy);
+    text-align: center;
+    padding: 14px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .footer strong { color: rgba(255,255,255,0.65); }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-dot"></div>
+  <div class="top-bar-text"> Vérification gratuite &nbsp;·&nbsp; Disponible partout au Canada</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Programme canadien de liquidation de véhicules</div>
+  <h1>Les banques liquident des<br>véhicules <em>près de chez vous</em></h1>
+  <p class="hero-sub">Reprises, retours de location, surplus de flottes — tout arrive en même temps. Les prix baissent. Les approbations sont plus faciles qu'elles ne l'ont été depuis des années.</p>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+  <!-- EXPLANATION -->
+  <div class="explanation">
+    <p>Les banques et les opérateurs de flottes partout au Canada liquident présentement leurs reprises, retours de bail et inventaires excédentaires. Cela signifie des <strong>paiements mensuels aussi bas que 263 $/mois</strong> — et des approbations pour des personnes qui ont déjà été refusées. Le quiz vous montre ce qui est disponible près de chez vous et votre paiement mensuel réel.</p>
+  </div>
+
+  <!-- CHECKS -->
+  <div class="checks">
+    <div class="check-item">
+      <div class="check-icon">
+        <svg viewBox="0 0 11 11" fill="none"><path d="M1.5 5.5l3 3 5-6" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="check-text">
+        Camions, VUS &amp; berlines — tous les types de véhicules
+        <span>Prix de liquidation sur tout l'inventaire</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-icon">
+        <svg viewBox="0 0 11 11" fill="none"><path d="M1.5 5.5l3 3 5-6" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="check-text">
+        Crédit 400+ accepté — mauvais crédit OK
+        <span>Les chances d'approbation sont les plus élevées depuis des années</span>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-icon">
+        <svg viewBox="0 0 11 11" fill="none"><path d="M1.5 5.5l3 3 5-6" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="check-text">
+        90 secondes pour voir ce qui est près de chez vous
+        <span>Gratuit — sans obligation — aucun impact sur le crédit</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL PROOF -->
+
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="cta-label">Vérifiez votre région — gratuit &amp; instantané</div>
+
+    <div class="payment-callout">
+      <span class="payment-text">Paiements à partir de</span>
+      <strong>263 $ / mois</strong>
+    </div>
+
+    <div class="cta-btn-wrap">
+      <a href="https://trk.reliableautopolicy.com/click" class="cta-btn">
+        Découvrez ce à quoi je suis admissible →
+        <span class="cta-sub">Prend 90 secondes · Aucun impact sur le crédit</span>
+      </a>
+    </div>
+
+    <div class="trust-row">
+      <div class="trust-item"><div class="trust-dot"></div>Aucun impact sur le crédit</div>
+      <div class="trust-item"><div class="trust-dot"></div>100 % gratuit</div>
+      <div class="trust-item"><div class="trust-dot"></div>Résultats instantanés</div>
+    </div>
+  </div>
+  <div class="social-proof">
+    <div class="proof-avatars">
+      <div class="proof-avatar">JT</div>
+      <div class="proof-avatar">SM</div>
+      <div class="proof-avatar">RB</div>
+      <div class="proof-avatar">KL</div>
+    </div>
+    <div class="proof-text">
+      <strong>2 400 + Canadiens</strong> ont vérifié leur admissibilité ce mois-ci
+    </div>
+  </div>
+  <!-- DISCLAIMER -->
+
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>🍁 MyAutoApproval</strong> &nbsp;·&nbsp; Fait au Canada &nbsp;·&nbsp; 18 King Street East, Toronto ON
+</div>
+
+</body>
+</html>
